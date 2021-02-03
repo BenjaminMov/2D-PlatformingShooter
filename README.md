@@ -21,9 +21,8 @@ With the evergrowing existance of online multiplayer battle royales and single-p
 Because of my passion and liking of such games, I feel it is a good challenge and test of my programming ability to see if I can make a game of such a standard for me and my friends to honestly enjoy.
 
 ## User Stories
-- As a user, I want to be able to create a level and add it to a list of levels
 - As a user, I want to be able to have a player that moves and jumps
-- As a user, I want to be able to have a player that can reload and shoot
+- As a user, I want to be able to have a player that can reload and shoot (add pellets to a list of pellets)
 - As a user, I want to be able to load a level to play in
 - As a user, I want to be able to have a second player with different controls
 - As a user, I want to be able to win a game by hitting another player with a pellet
