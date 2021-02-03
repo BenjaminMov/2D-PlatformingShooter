@@ -7,6 +7,7 @@ The purpose of this project is to produce a two player 2d shooter. Each player w
 - Snake gun that allows the user to control the pellet that they shoot like the classic arcade game 'snake'
 - Faster reload
 - Range increase of pellets fired
+
 **Who will use it?**
 The program is designed for local multiplayer, where two people are able to play without internet, and enjoy a high-intensity quick match of skill.
 **Why is this project of interest?**
@@ -16,4 +17,5 @@ With the evergrowing existance of online multiplayer battle royales and single-p
 - Nidhogg
 - Duck game
 - Fifa
+
 Because of my passion and liking of such games, I feel it is a good challenge and test of my programming ability to see if I can make a game of such a standard for me and my friends to honestly enjoy.
