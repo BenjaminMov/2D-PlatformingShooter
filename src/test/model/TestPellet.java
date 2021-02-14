@@ -14,12 +14,13 @@ public class TestPellet {
 
     @BeforeEach
     void runBefore() {
-        testPellet = new Pellet(MIDDLEX, 0, 0);
+        testPellet = new Pellet(0, 0, 0);
     }
 
     @Test
     void testMove(){
         testPellet.setDx(Pellet.SHOT_SPEED);
+        testPellet.setPelletX(MIDDLEX);
         testPellet.setPelletY(MIDDLEY);
         assertEquals(Pellet.SHOT_SPEED, testPellet.getDx());
         assertEquals(MIDDLEX, testPellet.getPelletX());
