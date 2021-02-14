@@ -10,18 +10,22 @@ public class Pellets {
         pelletArrayList = new ArrayList<>();
     }
 
+    //EFFECTS: gets the i'th term in the pellet list
     public Pellet getElement(int i) {
         return pelletArrayList.get(i);
     }
 
+    //EFFECTS: returns the pellet arraylist
     public ArrayList<Pellet> getListOfPellets() {
         return pelletArrayList;
     }
 
+    //EFFECTS: adds a pellet to the list of pellets
     public void addPellet(Pellet pellet) {
         pelletArrayList.add(pellet);
     }
 
+    //EFFECTS: checks if the list of pellets is empty
     public boolean isEmpty() {
         return pelletArrayList.isEmpty();
     }

@@ -192,9 +192,9 @@ public class TestPlayer {
         testPlayer.setFacingRight(true);
         testPlayer.shoot();
         assertFalse(testPlayer.getPellets().isEmpty());
-        Pellet testPellet = new Pellet(testPlayer.pelletXStart(), testPlayer.getPlayerY(), Pellet.SHOT_SPEED);
-        testPlayer.getPellets().addPellet(testPellet);
-        assertEquals(testPlayer.getPellets().getElement(0), testPlayer.getPellets().getElement(0));
+        assertTrue(testPlayer.getFacingRight());
+        assertEquals(testPlayer.pelletXStart(), testPlayer.getPellets().getElement(0).getPelletX());
+        assertEquals(testPlayer.getPlayerY(), testPlayer.getPellets().getElement(0).getPelletY());
         assertEquals(Player.RELOAD_AMOUNT - 1, testPlayer.getMagazine());
     }
 

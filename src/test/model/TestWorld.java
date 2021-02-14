@@ -99,5 +99,6 @@ public class TestWorld {
         assertTrue(testGame.getPlayer2().getAlive());
         testGame.update();
         assertFalse(testGame.getPlayer2().getAlive());
+        assertTrue(testGame.getIfGameOver());
     }
 }
