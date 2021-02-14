@@ -151,10 +151,7 @@ public class Player {
             Pellet p = new Pellet(pelletXStart(), playerY, Pellet.SHOT_SPEED * shootDirection());
             pellets.addPellet(p);
             magazine--;
-            System.out.println("BANG!"); //change later in phase 3
-        } else {
-            System.out.println("no ammo!"); //change later in phase 3
-        }
+        } //
     }
 
     // MODIFIES: dy

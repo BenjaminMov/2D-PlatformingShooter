@@ -1,5 +1,6 @@
 package ui;
 
+import model.Player;
 import model.World;
 
 import java.util.Scanner;
@@ -72,10 +73,10 @@ public class ConsoleGame {
         }
         if (command.equals("j")) {
             world.getPlayer1().reload();
-            System.out.println("Player1 has " + world.getPlayer1().getMagazine().toString()
-                               + " pellets remaining");
+            System.out.println("Player1 has " + world.getPlayer1().getMagazine().toString() + " pellets remaining");
         } else if (command.equals("k")) {
             world.getPlayer1().shoot();
+            printAfterShoot(world.getPlayer1());
             System.out.println("Player1 has " + world.getPlayer1().getMagazine().toString()
                     + " pellets remaining");
         }
@@ -102,8 +103,17 @@ public class ConsoleGame {
                     + " pellets remaining");
         } else if (command.equals("2")) {
             world.getPlayer2().shoot();
+            printAfterShoot(world.getPlayer2());
             System.out.println("Player2 has " + world.getPlayer2().getMagazine().toString()
                     + " pellets remaining");
+        }
+    }
+
+    private void printAfterShoot(Player player) {
+        if (player.getMagazine() > 0) {
+            System.out.println("BANG!");
+        } else {
+            System.out.println("no ammo!");
         }
     }
 

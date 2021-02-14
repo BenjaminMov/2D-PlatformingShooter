@@ -4,9 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import static model.Pellet.PELLET_WIDTH;
 import static model.Player.*;
 import static model.World.*;
@@ -14,15 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPlayer {
 
-    private final ByteArrayOutputStream CONSOLE_OUT = new ByteArrayOutputStream();
-    private final PrintStream ORIGINAL_OUT = System.out;
-
     Player testPlayer;
 
     @BeforeEach
     void runBefore(){
         testPlayer = new Player(P1_STARTX, P_STARTY);
-        System.setOut(new PrintStream(CONSOLE_OUT));
     }
 
 
@@ -236,10 +229,5 @@ public class TestPlayer {
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
         testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
-    }
-
-    @AfterEach
-    void fixStream() {
-        System.setOut(ORIGINAL_OUT);
     }
 }
