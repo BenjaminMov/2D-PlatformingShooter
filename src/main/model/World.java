@@ -2,8 +2,6 @@ package model;
 
 //import java.awt.event.KeyEvent;
 
-import static model.Pellet.PELLET_WIDTH;
-
 //Model of the world where 2 players play the game
 public class World {
     public static final int SCENE_WIDTH = 800;

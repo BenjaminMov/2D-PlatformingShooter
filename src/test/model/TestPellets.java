@@ -9,21 +9,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPellets {
 
-    Pellets testpellets;
+    Pellets testPellets;
     Pellet testP1;
     Pellet testP2;
     Pellet testP3;
 
     @BeforeEach
     void runBefore() {
-        testpellets = new Pellets();
+        testPellets = new Pellets();
         testP1 = new Pellet(10.0,10.0,10.0);
         testP2 = new Pellet(50.0, 50.0, 20.0);
         testP3 = new Pellet(15.0, 25.0, 60.0);
 
-        testpellets.addPellet(testP1);
-        testpellets.addPellet(testP2);
-        testpellets.addPellet(testP3);
+        testPellets.addPellet(testP1);
+        testPellets.addPellet(testP2);
+        testPellets.addPellet(testP3);
     }
 
     @Test
@@ -33,13 +33,13 @@ public class TestPellets {
         pelletListX.add(10.0);
         pelletListX.add(50.0);
         pelletListX.add(15.0);
-        assertEquals(pelletListX, testpellets.getAllPelletX());
-        testpellets.movePellets();
+        assertEquals(pelletListX, testPellets.getAllPelletX());
+        testPellets.movePellets();
         pelletListX.clear();
         pelletListX.add(10.0 + 10.0);
         pelletListX.add(50.0 + 20.0);
         pelletListX.add(15.0 + 60.0);
-        assertEquals(pelletListX, testpellets.getAllPelletX());
+        assertEquals(pelletListX, testPellets.getAllPelletX());
     }
 
     @Test
@@ -49,9 +49,9 @@ public class TestPellets {
         pelletListY.add(10.0);
         pelletListY.add(50.0);
         pelletListY.add(25.0);
-        assertEquals(pelletListY, testpellets.getAllPelletY());
+        assertEquals(pelletListY, testPellets.getAllPelletY());
         //no movement in y expected
-        testpellets.movePellets();
-        assertEquals(pelletListY, testpellets.getAllPelletY());
+        testPellets.movePellets();
+        assertEquals(pelletListY, testPellets.getAllPelletY());
     }
 }

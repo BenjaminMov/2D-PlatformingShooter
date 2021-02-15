@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPellet {
 
-    private static final double MIDDLEX = World.SCENE_WIDTH / 2.0;
-    private static final double MIDDLEY = World.SCENE_HEIGHT / 2.0;
+    private static final double MIDDLE_X = World.SCENE_WIDTH / 2.0;
+    private static final double MIDDLE_Y = World.SCENE_HEIGHT / 2.0;
     Pellet testPellet;
 
     @BeforeEach
@@ -20,13 +20,13 @@ public class TestPellet {
     @Test
     void testMove(){
         testPellet.setDx(Pellet.SHOT_SPEED);
-        testPellet.setPelletX(MIDDLEX);
-        testPellet.setPelletY(MIDDLEY);
+        testPellet.setPelletX(MIDDLE_X);
+        testPellet.setPelletY(MIDDLE_Y);
         assertEquals(Pellet.SHOT_SPEED, testPellet.getDx());
-        assertEquals(MIDDLEX, testPellet.getPelletX());
-        assertEquals(MIDDLEY, testPellet.getPelletY());
+        assertEquals(MIDDLE_X, testPellet.getPelletX());
+        assertEquals(MIDDLE_Y, testPellet.getPelletY());
         testPellet.move();
-        assertEquals(MIDDLEX + Pellet.SHOT_SPEED, testPellet.getPelletX());
-        assertEquals(MIDDLEY, testPellet.getPelletY());
+        assertEquals(MIDDLE_X + Pellet.SHOT_SPEED, testPellet.getPelletX());
+        assertEquals(MIDDLE_Y, testPellet.getPelletY());
     }
 }
