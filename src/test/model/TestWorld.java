@@ -100,5 +100,11 @@ public class TestWorld {
         testGame.update();
         assertFalse(testGame.getPlayer2().getAlive());
         assertTrue(testGame.getIfGameOver());
+        testGame.getPlayer2().setAlive(true);
+        testGame.setIfGameOver(false);
+        assertFalse(testGame.getIfGameOver());
+        testGame.getPlayer1().setAlive(false);
+        testGame.update();
+        assertTrue(testGame.getIfGameOver());
     }
 }

@@ -94,7 +94,7 @@ public class Player {
     //MODIFIES: playerX, playerY, dy
     //EFFECTS: gives the next position of the player
     public void move() {
-        if (playerY <= World.P_STARTY) {
+        if (playerY <= World.P_STARTY) { //change to include platforms aswell
             dy = dy + gravity;
         }
         playerX = playerX + dx;

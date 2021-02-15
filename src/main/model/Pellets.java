@@ -31,6 +31,11 @@ public class Pellets {
         return pellets.isEmpty();
     }
 
+    //EFFECTS: gets number of pellets that belong to a player
+    public int size() {
+        return pellets.size();
+    }
+
     // MODIFIES: this
     // EFFECTS: moves all pellets in the list of pellets
     public void movePellets() {

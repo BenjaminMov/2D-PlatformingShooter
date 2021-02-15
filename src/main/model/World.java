@@ -52,6 +52,10 @@ public class World {
         return gameDone;
     }
 
+    public void setIfGameOver(Boolean over) {
+        gameDone = over;
+    }
+
     /*
     private void player1Control(int keyInput) {
         if (keyInput == KeyEvent.VK_KP_LEFT || keyInput == KeyEvent.VK_LEFT) {

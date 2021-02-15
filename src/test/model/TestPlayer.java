@@ -162,6 +162,8 @@ public class TestPlayer {
         assertEquals(testPlayer.getMagazine(), 0);
         testPlayer.reload();
         assertEquals(Player.RELOAD_AMOUNT, testPlayer.getMagazine());
+        testPlayer.reload();
+        assertEquals(RELOAD_AMOUNT * 2, testPlayer.getMagazine());
     }
 
     @Test
@@ -170,6 +172,9 @@ public class TestPlayer {
         assertEquals(P1_STARTX + (PLAYER_WIDTH / 2.0) + PELLET_WIDTH / 2 + 1, testPlayer.pelletXStart());
         testPlayer.setFacingRight(false);
         assertEquals(P1_STARTX - (PLAYER_WIDTH / 2.0) - PELLET_WIDTH / 2 - 1, testPlayer.pelletXStart());
+        testPlayer.setPlayerX(PLAYER_WIDTH);
+        testPlayer.setFacingRight(true);
+        assertEquals(PLAYER_WIDTH + (PLAYER_WIDTH / 2.0) + PELLET_WIDTH / 2 + 1, testPlayer.pelletXStart());
     }
 
     @Test
@@ -195,13 +200,27 @@ public class TestPlayer {
         assertEquals(testPlayer.pelletXStart(), testPlayer.getPellets().getElement(0).getPelletX());
         assertEquals(testPlayer.getPlayerY(), testPlayer.getPellets().getElement(0).getPelletY());
         assertEquals(Player.RELOAD_AMOUNT - 1, testPlayer.getMagazine());
+        for (int i = 0; i < RELOAD_AMOUNT - 2; i++) {
+            testPlayer.shoot();
+        }
+        assertEquals(1, testPlayer.getMagazine());
+        assertEquals(RELOAD_AMOUNT - 1, testPlayer.getPellets().size());
+        testPlayer.shoot();
+        assertEquals(0, testPlayer.getMagazine());
+        assertEquals(RELOAD_AMOUNT, testPlayer.getPellets().size());
+        //no ammo again
+        testPlayer.shoot();
+        assertEquals(0, testPlayer.getMagazine());
+        assertEquals(RELOAD_AMOUNT, testPlayer.getPellets().size());
     }
 
     @Test
     void testJump() {
         //in air
+        testPlayer.setGravity(0);
         testPlayer.setPlayerY(SCENE_HEIGHT / 2.0);
         testPlayer.jump();
+        testPlayer.move();
         assertEquals(SCENE_HEIGHT / 2.0,testPlayer.getPlayerY());
         testPlayer.setPlayerY(P_STARTY);
         testPlayer.setGravity(100);
@@ -217,6 +236,13 @@ public class TestPlayer {
         testPlayer.move();
         assertEquals(JUMP_STRENGTH + 200, testPlayer.getDy());
         assertEquals(P_STARTY - 100, testPlayer.getPlayerY());
+        //on ground
+        testPlayer.move();
+        assertEquals(JUMP_STRENGTH + 300, testPlayer.getDy());
+        assertEquals(P_STARTY, testPlayer.getPlayerY());
+        testPlayer.move();
+        testPlayer.enforceWall();
+        assertEquals(0, testPlayer.getDy());
     }
 
     @Test
@@ -226,7 +252,44 @@ public class TestPlayer {
         testPlayer.reload();
         testPlayer.shoot();
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX);
+        //left edge of player
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2.0 - 1);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2.0);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2.0 + 1);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        //right edge of player
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2.0 + 1);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2.0);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2.0 - 1);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        //top of player
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX);
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2.0 - 1);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2.0);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2.0 + 1);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        //bottom of player
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2.0 + 1);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2.0);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2.0 - 1);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        //middle of player
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        //within x but not y
+        testPlayer.getPellets().getElement(0).setPelletY(0);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
+        //within y but not x
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY);
+        testPlayer.getPellets().getElement(0).setPelletX(0);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
     }
 }
