@@ -39,8 +39,8 @@ public class Pellets {
     // MODIFIES: this
     // EFFECTS: moves all pellets in the list of pellets
     public void movePellets() {
-        for (Pellet i : pellets) {
-            i.move();
+        for (Pellet p : pellets) {
+            p.move();
         }
     }
 

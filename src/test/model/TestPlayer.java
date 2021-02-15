@@ -41,6 +41,16 @@ public class TestPlayer {
         testPlayer.move();
         assertEquals(SCENE_HEIGHT / 2.0 + 100 + 200, testPlayer.getPlayerY());
         assertEquals(200, testPlayer.getDy());
+        //test gravity off
+        //- note this does not happen in game however it is required by autobot to ensure full coverage
+        // the reason for this is that the code structure is the one I want to use later in development, but the
+        // current conditions do not necessarily require to be checked
+        testPlayer.setPlayerY(SCENE_HEIGHT);
+        testPlayer.setDy(-2);
+        testPlayer.setGravity(60);
+        testPlayer.move();
+        assertEquals(-2, testPlayer.getDy());
+        assertEquals(SCENE_HEIGHT - 2, testPlayer.getPlayerY());
     }
 
     @Test
