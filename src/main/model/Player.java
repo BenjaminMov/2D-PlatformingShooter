@@ -11,6 +11,7 @@ public class Player {
 
     private int magazine = 0;
     private boolean facingRight;
+    private boolean onPlatform;
     private boolean alive = true;
 
     public static final int PLAYER_WIDTH = 16;
@@ -87,6 +88,10 @@ public class Player {
         this.facingRight = facingRight;
     }
 
+    public void setOnPlatform(boolean onPlatform) {
+        this.onPlatform = onPlatform;
+    }
+
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
@@ -94,7 +99,7 @@ public class Player {
     //MODIFIES: playerX, playerY, dy
     //EFFECTS: gives the next position of the player
     public void move() {
-        if (playerY <= World.P_STARTY) { //change to include platforms aswell
+        if (playerY <= World.P_STARTY && !onPlatform) { //change to include platforms aswell
             dy = dy + gravity;
         }
         playerX = playerX + dx;
@@ -185,4 +190,5 @@ public class Player {
         }
         return colliding;
     }
+
 }

@@ -14,6 +14,7 @@ public class World {
 
     private Player player1;
     private Player player2;
+    private Level level;
 
     public World() {
         setUp();
@@ -22,6 +23,7 @@ public class World {
     private void setUp() {
         player1 = new Player(P1_STARTX, P_STARTY);
         player2 = new Player(P2_STARTX, P_STARTY);
+        level = new Level();
     }
 
     // MODIFIES: player1, player2, gameDone
@@ -35,6 +37,8 @@ public class World {
         player1.enforceWall();
         player2.enforceWall();
 
+        level.makePlatformsSolid(player1);
+        level.makePlatformsSolid(player2);
         removePlayerIfShot(player1);
         removePlayerIfShot(player2);
         checkIfGameEnd();
