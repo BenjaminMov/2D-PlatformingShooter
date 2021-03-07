@@ -1,8 +1,25 @@
-{"levels": [{
-    "levelName": "sometestlevel",
-    "platforms": [{
-        "x": 9,
-        "width": 199,
-        "y": 19
-    }]
-}]}
+{"levels": [
+    {
+        "levelName": "sometestlevel",
+        "platforms": [{
+            "x": 9,
+            "width": 199,
+            "y": 19
+        }]
+    },
+    {
+        "levelName": "newlevelagain",
+        "platforms": [
+            {
+                "x": 40,
+                "width": 30,
+                "y": 40
+            },
+            {
+                "x": 25,
+                "width": 75,
+                "y": 50
+            }
+        ]
+    }
+]}

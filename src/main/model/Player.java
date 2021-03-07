@@ -168,7 +168,7 @@ public class Player {
     // MODIFIES: dy
     // EFFECTS: suddenly sets player dy to face upwards, simulating a jump
     public void jump() {
-        if (playerY == World.SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 || onPlatform) { //change to also include platforms
+        if (playerY == World.SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 || onPlatform) {
             dy = JUMP_STRENGTH;
         }
     }

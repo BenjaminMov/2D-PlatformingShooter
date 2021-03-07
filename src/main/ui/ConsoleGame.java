@@ -266,8 +266,8 @@ public class ConsoleGame {
                             + " y: " + p.getPlatformY()
                             + " width: " + p.getPlatformWidth());
                     platNum++;
-                    break;
                 }
+                break;
             case "q":
                 world.setIfGameOver(true);
                 break;

@@ -113,6 +113,27 @@ public class TestWorld {
         testPlayer1.setAlive(false);
         testGame.update();
         assertTrue(testGame.getIfGameOver());
+        testPlayer1.setAlive(true);
+        testGame.setIfGameOver(false);
+        testPlayer2.reload();
+        testPlayer2.shoot();
+        testGame.update();
+        assertTrue(testPlayer1.getAlive());
+        testGame.update();
+        assertFalse(testPlayer1.getAlive());
+    }
+
+    @Test
+    void testShootSelf() {
+        testPlayer1.setFacingRight(true);
+        testPlayer1.reload();
+        testPlayer1.shoot();
+        testPlayer1.setPlayerX(testPlayer1.pelletXStart() + 2 * SHOT_SPEED);
+        testGame.update();
+        assertTrue(testPlayer1.getAlive());
+        testGame.update();
+        assertFalse(testPlayer1.getAlive());
+        assertTrue(testGame.getIfGameOver());
     }
 
     @Test
@@ -165,7 +186,9 @@ public class TestWorld {
         testPlayer1.setGravity(30);
         testPlayer1.setDy(10);
         testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
-        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - 50);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - 100);
+        testGame.update();
+        assertEquals(SCENE_HEIGHT / 2.0 - 100 + 40, testPlayer1.getPlayerY());
         testGame.update();
         assertEquals(testGame.getLevel().getPlatform(0).getPlatformY()
                 - Player.PLAYER_HEIGHT / 2.0 - Platform.PLATFORM_HEIGHT,
@@ -174,7 +197,7 @@ public class TestWorld {
     }
     
     @Test
-    void testPlayerOnEdgeOfPlatform() {
+    void testPlayerOnLeftEdgeOfPlatform() {
         testPlayer1.setGravity(0);
         double startY = SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2;
         double platformX = testGame.getLevel().getPlatform(0).getPlatformX();
@@ -196,6 +219,51 @@ public class TestWorld {
         testPlayer1.setPlayerX(platformX - Player.PLAYER_WIDTH / 2.0 - platformWidth / 2 - 1);
         testGame.update();
         assertEquals(startY + 10,testPlayer1.getPlayerY());
+    }
+
+    @Test
+    void testPlayerOnRightEdgeOfPlatform() {
+        testPlayer1.setGravity(0);
+        double startY = SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2;
+        double platformX = testGame.getLevel().getPlatform(0).getPlatformX();
+        double platformWidth = testGame.getLevel().getPlatform(0).getPlatformWidth();
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerY(startY);
+        testPlayer1.setPlayerX(platformX + platformWidth / 2);
+        testGame.update();
+        assertEquals(startY, testPlayer1.getPlayerY());
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(platformX + platformWidth / 2 + 1);
+        testGame.update();
+        assertEquals(startY ,testPlayer1.getPlayerY());
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(platformX + Player.PLAYER_WIDTH / 2.0 + platformWidth / 2);
+        testGame.update();
+        assertEquals(startY ,testPlayer1.getPlayerY());
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(platformX + Player.PLAYER_WIDTH / 2.0 + platformWidth / 2 + 1);
+        testGame.update();
+        assertEquals(startY + 10,testPlayer1.getPlayerY());
+    }
+
+    @Test
+    void testJumpOnPlatform() {
+        testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2);
+        testGame.update();
+        assertEquals(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2, testPlayer1.getPlayerY());
+        testPlayer1.jump();
+        assertEquals(Player.JUMP_STRENGTH, testPlayer1.getDy());
+    }
+
+    @Test
+    void testGoingUpThroughPlatform() {
+        testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - Platform.PLATFORM_HEIGHT - Player.PLAYER_HEIGHT / 2.0);
+        testPlayer1.setDy(-20);
+        testGame.update();
+        assertEquals(SCENE_HEIGHT / 2.0 - Platform.PLATFORM_HEIGHT - Player.PLAYER_HEIGHT / 2.0 - 20,
+                     testPlayer1.getPlayerY());
     }
 
     @Test
