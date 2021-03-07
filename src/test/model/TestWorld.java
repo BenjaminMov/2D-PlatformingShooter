@@ -154,9 +154,9 @@ public class TestWorld {
         testPlayer1.setGravity(0);
         testPlayer1.setDy(10);
         testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
-        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 + Player.PLAYER_HEIGHT);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0);
         testGame.update();
-        assertEquals(SCENE_HEIGHT / 2.0 + Player.PLAYER_HEIGHT + 10, testPlayer1.getPlayerY());
+        assertEquals(SCENE_HEIGHT / 2.0 + 10, testPlayer1.getPlayerY());
     }
 
 
@@ -250,8 +250,13 @@ public class TestWorld {
     void testJumpOnPlatform() {
         testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
         testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2);
+        testPlayer1.setDy(0);
         testGame.update();
         assertEquals(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2, testPlayer1.getPlayerY());
+        testPlayer1.setDy(40);
+        testGame.update();
+        assertEquals(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2, testPlayer1.getPlayerY());
+        assertEquals(0, testPlayer1.getDy());
         testPlayer1.jump();
         assertEquals(Player.JUMP_STRENGTH, testPlayer1.getDy());
 
