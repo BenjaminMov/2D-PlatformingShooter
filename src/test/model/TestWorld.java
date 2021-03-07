@@ -254,6 +254,7 @@ public class TestWorld {
         assertEquals(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2, testPlayer1.getPlayerY());
         testPlayer1.jump();
         assertEquals(Player.JUMP_STRENGTH, testPlayer1.getDy());
+
     }
 
     @Test
