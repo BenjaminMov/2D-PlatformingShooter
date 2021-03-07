@@ -23,13 +23,16 @@ public class World {
     private void setUp() {
         player1 = new Player(P1_STARTX, P_STARTY);
         player2 = new Player(P2_STARTX, P_STARTY);
-        level = new Level();
+        level = new Level("LevelAlpha");
     }
 
     // MODIFIES: player1, player2, gameDone
     // EFFECTS: implements physics and boundaries for all players, also removes players if shot
     //          ends the game if player has been shot
     public void update() {
+        level.makePlatformsSolid(player1);
+        level.makePlatformsSolid(player2);
+
         player1.move();
         player2.move();
         player1.getPellets().movePellets();
@@ -37,8 +40,6 @@ public class World {
         player1.enforceWall();
         player2.enforceWall();
 
-        level.makePlatformsSolid(player1);
-        level.makePlatformsSolid(player2);
         removePlayerIfShot(player1);
         removePlayerIfShot(player2);
         checkIfGameEnd();
@@ -50,6 +51,14 @@ public class World {
 
     public Player getPlayer2() {
         return player2;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public Boolean getIfGameOver() {

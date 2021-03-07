@@ -3,108 +3,209 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static model.World.*;
 import static model.Pellet.SHOT_SPEED;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestWorld {
 
     World testGame;
+    Player testPlayer1;
+    Player testPlayer2;
 
     @BeforeEach
     void runBefore() {
         testGame = new World();
+        testGame.getLevel().addPlatform(new Platform(SCENE_WIDTH / 2.0, SCENE_HEIGHT / 2.0, 10));
+        
+        testPlayer1 = testGame.getPlayer1();
+        testPlayer2 = testGame.getPlayer2();
     }
 
     @Test
     void testUpdateNoMove() {
         //initialization
-        assertEquals(World.P1_STARTX, testGame.getPlayer1().getPlayerX());
-        assertEquals(World.P2_STARTX, testGame.getPlayer2().getPlayerX());
-        assertTrue(testGame.getPlayer1().getPellets().isEmpty());
-        assertTrue(testGame.getPlayer2().getPellets().isEmpty());
+        assertEquals(World.P1_STARTX, testPlayer1.getPlayerX());
+        assertEquals(World.P2_STARTX, testPlayer2.getPlayerX());
+        assertTrue(testPlayer1.getPellets().isEmpty());
+        assertTrue(testPlayer2.getPellets().isEmpty());
         //Players are stationary, no movement expected
         testGame.update();
-        assertEquals(World.P1_STARTX, testGame.getPlayer1().getPlayerX());
-        assertEquals(World.P2_STARTX, testGame.getPlayer2().getPlayerX());
-        assertEquals(World.P_STARTY, testGame.getPlayer1().getPlayerY());
-        assertEquals(World.P_STARTY, testGame.getPlayer2().getPlayerY());
-        assertTrue(testGame.getPlayer1().getPellets().isEmpty());
-        assertTrue(testGame.getPlayer2().getPellets().isEmpty());
+        assertEquals(World.P1_STARTX, testPlayer1.getPlayerX());
+        assertEquals(World.P2_STARTX, testPlayer2.getPlayerX());
+        assertEquals(World.P_STARTY, testPlayer1.getPlayerY());
+        assertEquals(World.P_STARTY, testPlayer2.getPlayerY());
+        assertTrue(testPlayer1.getPellets().isEmpty());
+        assertTrue(testPlayer2.getPellets().isEmpty());
     }
 
     @Test
     void testUpdateMoveNoCollision() {
         //change player dx and dy (without wall collision)
-        testGame.getPlayer1().setDx(10);
-        testGame.getPlayer2().setDx(-10);
-        testGame.getPlayer1().setDy(-30);
-        testGame.getPlayer2().setDy(-30);
-        testGame.getPlayer1().setGravity(0);
-        testGame.getPlayer2().setGravity(0);
+        testPlayer1.setDx(10);
+        testPlayer2.setDx(-10);
+        testPlayer1.setDy(-30);
+        testPlayer2.setDy(-30);
+        testPlayer1.setGravity(0);
+        testPlayer2.setGravity(0);
         testGame.update();
-        assertEquals(World.P1_STARTX + 10, testGame.getPlayer1().getPlayerX());
-        assertEquals(World.P2_STARTX - 10, testGame.getPlayer2().getPlayerX());
-        assertEquals(World.P_STARTY - 30, testGame.getPlayer1().getPlayerY());
-        assertEquals(World.P_STARTY - 30, testGame.getPlayer2().getPlayerY());
+        assertEquals(World.P1_STARTX + 10, testPlayer1.getPlayerX());
+        assertEquals(World.P2_STARTX - 10, testPlayer2.getPlayerX());
+        assertEquals(World.P_STARTY - 30, testPlayer1.getPlayerY());
+        assertEquals(World.P_STARTY - 30, testPlayer2.getPlayerY());
     }
 
     @Test
     void testUpdateMoveAndCollision() {
-        testGame.getPlayer1().setDx(30000);
-        testGame.getPlayer2().setDy(-10000);
+        testPlayer1.setDx(30000);
+        testPlayer2.setDy(-10000);
         testGame.update();
-        assertEquals(World.SCENE_WIDTH - Player.PLAYER_WIDTH / 2.0, testGame.getPlayer1().getPlayerX());
-        assertEquals(Player.PLAYER_HEIGHT / 2.0, testGame.getPlayer2().getPlayerY());
+        assertEquals(World.SCENE_WIDTH - Player.PLAYER_WIDTH / 2.0, testPlayer1.getPlayerX());
+        assertEquals(Player.PLAYER_HEIGHT / 2.0, testPlayer2.getPlayerY());
     }
 
     @Test
     void testUpdateMovingPellets() {
-        testGame.getPlayer1().setFacingRight(true);
-        testGame.getPlayer2().setFacingRight(false);
-        testGame.getPlayer1().reload();
-        testGame.getPlayer1().shoot();
-        testGame.getPlayer2().reload();
-        testGame.getPlayer2().shoot();
+        testPlayer1.setFacingRight(true);
+        testPlayer2.setFacingRight(false);
+        testPlayer1.reload();
+        testPlayer1.shoot();
+        testPlayer2.reload();
+        testPlayer2.shoot();
         testGame.update();
-        assertEquals(World.P1_STARTX, testGame.getPlayer1().getPlayerX());
-        assertEquals(World.P2_STARTX, testGame.getPlayer2().getPlayerX());
-        assertEquals(World.P_STARTY, testGame.getPlayer1().getPlayerY());
-        assertEquals(World.P_STARTY, testGame.getPlayer2().getPlayerY());
+        assertEquals(World.P1_STARTX, testPlayer1.getPlayerX());
+        assertEquals(World.P2_STARTX, testPlayer2.getPlayerX());
+        assertEquals(World.P_STARTY, testPlayer1.getPlayerY());
+        assertEquals(World.P_STARTY, testPlayer2.getPlayerY());
         //after 1 update
         assertEquals(World.P1_STARTX + Player.PLAYER_WIDTH / 2.0
                         + Pellet.PELLET_WIDTH / 2 + 1 + SHOT_SPEED,
-                testGame.getPlayer1().getPellets().getElement(0).getPelletX());
+                testPlayer1.getPellets().getElement(0).getPelletX());
         assertEquals(World.P2_STARTX - Player.PLAYER_WIDTH / 2.0
                         - Pellet.PELLET_WIDTH / 2 - 1 - SHOT_SPEED,
-                testGame.getPlayer2().getPellets().getElement(0).getPelletX());
+                testPlayer2.getPellets().getElement(0).getPelletX());
         //after 2 updates
         testGame.update();
         assertEquals(World.P1_STARTX + Player.PLAYER_WIDTH / 2.0
                         + Pellet.PELLET_WIDTH / 2 + 1 + 2 * SHOT_SPEED,
-                testGame.getPlayer1().getPellets().getElement(0).getPelletX());
+                testPlayer1.getPellets().getElement(0).getPelletX());
         assertEquals(World.P2_STARTX - Player.PLAYER_WIDTH / 2.0
                         - Pellet.PELLET_WIDTH / 2 - 1 - 2 * SHOT_SPEED,
-                testGame.getPlayer2().getPellets().getElement(0).getPelletX());
+                testPlayer2.getPellets().getElement(0).getPelletX());
 
     }
 
     @Test
     void testUpdateRemoveIfShot() {
-        testGame.getPlayer1().setFacingRight(true);
-        testGame.getPlayer2().setFacingRight(false);
-        testGame.getPlayer2().setPlayerX(testGame.getPlayer1().pelletXStart() + 2 * SHOT_SPEED);
-        testGame.getPlayer1().reload();
-        testGame.getPlayer1().shoot();
+        testPlayer1.setFacingRight(true);
+        testPlayer2.setFacingRight(false);
+        testPlayer2.setPlayerX(testPlayer1.pelletXStart() + 2 * SHOT_SPEED);
+        testPlayer1.reload();
+        testPlayer1.shoot();
         testGame.update();
-        assertTrue(testGame.getPlayer2().getAlive());
+        assertTrue(testPlayer2.getAlive());
         testGame.update();
-        assertFalse(testGame.getPlayer2().getAlive());
+        assertFalse(testPlayer2.getAlive());
         assertTrue(testGame.getIfGameOver());
-        testGame.getPlayer2().setAlive(true);
+        testPlayer2.setAlive(true);
         testGame.setIfGameOver(false);
         assertFalse(testGame.getIfGameOver());
-        testGame.getPlayer1().setAlive(false);
+        testPlayer1.setAlive(false);
         testGame.update();
         assertTrue(testGame.getIfGameOver());
     }
+
+    @Test
+    void testUpdateGoingThroughPlatform() {
+        testPlayer1.setGravity(0);
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT);
+        testGame.update();
+        assertEquals(testGame.getLevel().getPlatform(0).getPlatformY()
+                        - Player.PLAYER_HEIGHT / 2.0 - Platform.PLATFORM_HEIGHT,
+                testPlayer1.getPlayerY());
+        assertEquals(0, testPlayer1.getDy());
+    }
+
+    @Test
+    void testUpdateUnderPlatform() {
+        testPlayer1.setGravity(0);
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 + Player.PLAYER_HEIGHT);
+        testGame.update();
+        assertEquals(SCENE_HEIGHT / 2.0 + Player.PLAYER_HEIGHT + 10, testPlayer1.getPlayerY());
+    }
+
+
+    @Test
+    void testUpdateAbovePlatform() {
+        testPlayer1.setGravity(0);
+        testPlayer1.setDy(0);
+        testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT);
+        testGame.update();
+        assertEquals(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT, testPlayer1.getPlayerY());
+    }
+
+    @Test
+    void testUpdateOnPlatform() {
+        testPlayer1.setGravity(0);
+        testPlayer1.setDy(0);
+        testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - Platform.PLATFORM_HEIGHT);
+        testGame.update();
+        assertEquals(testPlayer1.getPlayerY(),
+                SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - Platform.PLATFORM_HEIGHT);
+    }
+
+    @Test
+    void testUpdateGoingThroughPlatformWithGravity() {
+        testPlayer1.setGravity(30);
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(SCENE_WIDTH / 2.0);
+        testPlayer1.setPlayerY(SCENE_HEIGHT / 2.0 - 50);
+        testGame.update();
+        assertEquals(testGame.getLevel().getPlatform(0).getPlatformY()
+                - Player.PLAYER_HEIGHT / 2.0 - Platform.PLATFORM_HEIGHT,
+                testPlayer1.getPlayerY());
+
+    }
+    
+    @Test
+    void testPlayerOnEdgeOfPlatform() {
+        testPlayer1.setGravity(0);
+        double startY = SCENE_HEIGHT / 2.0 - Player.PLAYER_HEIGHT / 2.0 - 2;
+        double platformX = testGame.getLevel().getPlatform(0).getPlatformX();
+        double platformWidth = testGame.getLevel().getPlatform(0).getPlatformWidth();
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerY(startY);
+        testPlayer1.setPlayerX(platformX - platformWidth / 2);
+        testGame.update();
+        assertEquals(startY, testPlayer1.getPlayerY());
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(platformX - platformWidth / 2 - 1);
+        testGame.update();
+        assertEquals(startY ,testPlayer1.getPlayerY());
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(platformX - Player.PLAYER_WIDTH / 2.0 - platformWidth / 2);
+        testGame.update();
+        assertEquals(startY ,testPlayer1.getPlayerY());
+        testPlayer1.setDy(10);
+        testPlayer1.setPlayerX(platformX - Player.PLAYER_WIDTH / 2.0 - platformWidth / 2 - 1);
+        testGame.update();
+        assertEquals(startY + 10,testPlayer1.getPlayerY());
+    }
+
+    @Test
+    void testSetLevel() {
+        Level testLevel1 = new Level("name1");
+        Level testLevel2 = new Level("name2");
+        testGame.setLevel(testLevel1);
+        assertEquals(testGame.getLevel(), testLevel1);
+        testGame.setLevel(testLevel2);
+        assertEquals(testGame.getLevel(), testLevel2);
+    }
+
 }

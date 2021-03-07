@@ -1,0 +1,25 @@
+{"levels": [
+  {
+    "levelName": "testlevel1",
+    "platforms": [{
+      "x": 1,
+      "width": 3,
+      "y": 2
+    }]
+  },
+  {
+    "levelName": "testlevel2",
+    "platforms": [
+      {
+        "x": 4,
+        "width": 6,
+        "y": 5
+      },
+      {
+        "x": 10,
+        "width": 30,
+        "y": 20
+      }
+    ]
+  }
+]}

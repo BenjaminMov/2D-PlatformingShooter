@@ -6,7 +6,7 @@ public class Player {
     private double playerY;
     private double dx;
     private double dy;
-    private double gravity = 100;
+    private double gravity;
     private Pellets pellets;
 
     private int magazine = 0;
@@ -19,6 +19,7 @@ public class Player {
     public static final int RELOAD_AMOUNT = 3;
     public static final double JUMP_STRENGTH = -200;
 
+    public static final double NORMAL_GRAVITY = 100;
 
 
     public Player(double x, double y) {
@@ -27,6 +28,7 @@ public class Player {
         dx = 0;
         dy = 0;
         pellets = new Pellets();
+        gravity = NORMAL_GRAVITY;
     }
 
     //getters
@@ -44,6 +46,10 @@ public class Player {
 
     public double getDy() {
         return dy;
+    }
+
+    public double getGravity() {
+        return gravity;
     }
 
     public Integer getMagazine() {
@@ -99,7 +105,7 @@ public class Player {
     //MODIFIES: playerX, playerY, dy
     //EFFECTS: gives the next position of the player
     public void move() {
-        if (playerY <= World.P_STARTY && !onPlatform) { //change to include platforms aswell
+        if (playerY <= World.P_STARTY && !onPlatform) {
             dy = dy + gravity;
         }
         playerX = playerX + dx;
@@ -162,7 +168,7 @@ public class Player {
     // MODIFIES: dy
     // EFFECTS: suddenly sets player dy to face upwards, simulating a jump
     public void jump() {
-        if (playerY == World.SCENE_HEIGHT - PLAYER_HEIGHT / 2.0) { //change to also include platforms
+        if (playerY == World.SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 || onPlatform) { //change to also include platforms
             dy = JUMP_STRENGTH;
         }
     }
@@ -190,5 +196,6 @@ public class Player {
         }
         return colliding;
     }
+
 
 }
