@@ -23,6 +23,10 @@ Because of my passion and liking of such games, I feel it is a good challenge an
 ## User Stories
 - As a user, I want to be able to have a player that moves and jumps
 - As a user, I want to be able to have a player that can reload and shoot (add pellets to a list of pellets)
-- As a user, I want to be able to load a level to play in
 - As a user, I want to be able to have a second player with different controls
 - As a user, I want to be able to win a game by hitting another player with a pellet
+
+- As a user, I want to be able to choose a level to play in
+- As a user, I want to be able to interact with the level chosen
+- As a user, I want to be able to create a level
+- As a user, I want to be able to save levels that I have made
