@@ -60,6 +60,7 @@ public class FunGame extends JFrame {
             setVisible(true);
             addTimer();
         } else if (choice == 1) {
+            askLevelName();
             add(ep);
             addKeyListener(new KeyHandler());
             pack();
@@ -69,6 +70,14 @@ public class FunGame extends JFrame {
         } else {
             this.dispose();
         }
+    }
+
+    private void askLevelName() {
+
+        String newLvlName = (String)JOptionPane.showInputDialog(null, "Choose your Level",
+                "Level Select", JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+
     }
 
     private void chooseLevel() {
