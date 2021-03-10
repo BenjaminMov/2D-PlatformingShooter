@@ -33,13 +33,13 @@ public class TestPlayer {
         assertNotEquals(P_STARTY, testPlayer.getPlayerY());
         //test gravity
         testPlayer.setDy(0);
-        testPlayer.setPlayerY(SCENE_HEIGHT / 2.0);
+        testPlayer.setPlayerY(SCENE_HEIGHT / 2);
         testPlayer.setGravity(100);
         testPlayer.move();
-        assertEquals(SCENE_HEIGHT / 2.0 + 100, testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT / 2 + 100, testPlayer.getPlayerY());
         assertEquals(testPlayer.getDy(), 100);
         testPlayer.move();
-        assertEquals(SCENE_HEIGHT / 2.0 + 100 + 200, testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT / 2 + 100 + 200, testPlayer.getPlayerY());
         assertEquals(200, testPlayer.getDy());
         //test gravity off
         //- note this does not happen in game however it is required by autobot to ensure full coverage
@@ -62,80 +62,80 @@ public class TestPlayer {
         //outside left x boundary
         testPlayer.setPlayerX(-PLAYER_WIDTH - 100);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         //just outside left x boundary
-        testPlayer.setPlayerX(PLAYER_WIDTH / 2.0 - 1);
+        testPlayer.setPlayerX(PLAYER_WIDTH / 2 - 1);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         //on left x boundary
-        testPlayer.setPlayerX(PLAYER_WIDTH / 2.0);
+        testPlayer.setPlayerX(PLAYER_WIDTH / 2);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         //just within left x boundary
-        testPlayer.setPlayerX(PLAYER_WIDTH / 2.0 + 1);
+        testPlayer.setPlayerX(PLAYER_WIDTH / 2 + 1);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_WIDTH / 2.0 + 1, testPlayer.getPlayerX());
+        assertEquals(PLAYER_WIDTH / 2 + 1, testPlayer.getPlayerX());
         //about to move out of left boundary
-        testPlayer.setPlayerX(PLAYER_WIDTH / 2.0 + 1);
-        testPlayer.setDx(-2.0);
+        testPlayer.setPlayerX(PLAYER_WIDTH / 2 + 1);
+        testPlayer.setDx(-2);
         testPlayer.move();
         testPlayer.enforceWall();
-        assertEquals(PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         assertEquals(0, testPlayer.getDx());
     }
 
     @Test
     void testRightEnforceWall() {
         //outside right x boundary
-        testPlayer.setPlayerX(SCENE_WIDTH + PLAYER_WIDTH / 2.0 + 100);
+        testPlayer.setPlayerX(SCENE_WIDTH + PLAYER_WIDTH / 2 + 100);
         testPlayer.enforceWall();
-        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         //just outside right x boundary
-        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2.0 + 1);
+        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2 + 1);
         testPlayer.enforceWall();
-        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         //on right x boundary
-        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2.0);
+        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2);
         testPlayer.enforceWall();
-        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         //just within right x boundary
-        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2.0 - 1);
+        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2 - 1);
         testPlayer.enforceWall();
-        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2.0 - 1, testPlayer.getPlayerX());
+        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2 - 1, testPlayer.getPlayerX());
         //about to move out of right boundary
-        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2.0 - 1);
-        testPlayer.setDx(2.0);
+        testPlayer.setPlayerX(SCENE_WIDTH - PLAYER_WIDTH / 2 - 1);
+        testPlayer.setDx(2);
         testPlayer.move();
         testPlayer.enforceWall();
-        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2.0, testPlayer.getPlayerX());
+        assertEquals(SCENE_WIDTH - PLAYER_WIDTH / 2, testPlayer.getPlayerX());
         assertEquals(0, testPlayer.getDx());
     }
 
     @Test
     void testBottomEnforceWall() {
         //outside bottom boundary
-        testPlayer.setPlayerY(SCENE_HEIGHT + PLAYER_HEIGHT / 2.0 + 100);
+        testPlayer.setPlayerY(SCENE_HEIGHT + PLAYER_HEIGHT / 2 + 100);
         testPlayer.enforceWall();
-        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         //just outside bottom boundary
-        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 + 1);
+        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2 + 1);
         testPlayer.enforceWall();
-        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         //on bottom boundary
-        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0);
+        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2);
         testPlayer.enforceWall();
-        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         //just within bottom boundary
-        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 - 1);
+        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2 - 1);
         testPlayer.enforceWall();
-        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 - 1, testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2 - 1, testPlayer.getPlayerY());
         //about to move out of bottom boundary
-        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 - 1);
-        testPlayer.setDy(2.0);
+        testPlayer.setPlayerY(SCENE_HEIGHT - PLAYER_HEIGHT / 2 - 1);
+        testPlayer.setDy(2);
         testPlayer.setGravity(0);
         testPlayer.move();
         testPlayer.enforceWall();
-        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT - PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         assertEquals(testPlayer.getDy(), 0);
     }
 
@@ -144,26 +144,26 @@ public class TestPlayer {
         //outside top boundary
         testPlayer.setPlayerY(-PLAYER_HEIGHT - 100);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         //just outside top boundary
-        testPlayer.setPlayerY(PLAYER_HEIGHT / 2.0 - 1);
+        testPlayer.setPlayerY(PLAYER_HEIGHT / 2 - 1);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         //on top boundary
-        testPlayer.setPlayerY(PLAYER_HEIGHT / 2.0);
+        testPlayer.setPlayerY(PLAYER_HEIGHT / 2);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         //just within top boundary
-        testPlayer.setPlayerY(PLAYER_HEIGHT / 2.0 + 1);
+        testPlayer.setPlayerY(PLAYER_HEIGHT / 2 + 1);
         testPlayer.enforceWall();
-        assertEquals(PLAYER_HEIGHT / 2.0 + 1, testPlayer.getPlayerY());
+        assertEquals(PLAYER_HEIGHT / 2 + 1, testPlayer.getPlayerY());
         //about to move out of left boundary
-        testPlayer.setPlayerY(PLAYER_HEIGHT / 2.0 + 1);
-        testPlayer.setDy(-2.0);
+        testPlayer.setPlayerY(PLAYER_HEIGHT / 2 + 1);
+        testPlayer.setDy(-2);
         testPlayer.setGravity(0);
         testPlayer.move();
         testPlayer.enforceWall();
-        assertEquals(PLAYER_HEIGHT / 2.0, testPlayer.getPlayerY());
+        assertEquals(PLAYER_HEIGHT / 2, testPlayer.getPlayerY());
         assertEquals(0, testPlayer.getDy());
     }
 
@@ -179,12 +179,12 @@ public class TestPlayer {
     @Test
     void testPelletXStart() {
         testPlayer.setFacingRight(true);
-        assertEquals(P1_STARTX + (PLAYER_WIDTH / 2.0) + PELLET_WIDTH / 2 + 1, testPlayer.pelletXStart());
+        assertEquals(P1_STARTX + (PLAYER_WIDTH / 2) + PELLET_WIDTH / 2 + 1, testPlayer.pelletXStart());
         testPlayer.setFacingRight(false);
-        assertEquals(P1_STARTX - (PLAYER_WIDTH / 2.0) - PELLET_WIDTH / 2 - 1, testPlayer.pelletXStart());
+        assertEquals(P1_STARTX - (PLAYER_WIDTH / 2) - PELLET_WIDTH / 2 - 1, testPlayer.pelletXStart());
         testPlayer.setPlayerX(PLAYER_WIDTH);
         testPlayer.setFacingRight(true);
-        assertEquals(PLAYER_WIDTH + (PLAYER_WIDTH / 2.0) + PELLET_WIDTH / 2 + 1, testPlayer.pelletXStart());
+        assertEquals(PLAYER_WIDTH + (PLAYER_WIDTH / 2) + PELLET_WIDTH / 2 + 1, testPlayer.pelletXStart());
     }
 
     @Test
@@ -228,28 +228,30 @@ public class TestPlayer {
     void testJump() {
         //in air
         testPlayer.setGravity(0);
-        testPlayer.setPlayerY(SCENE_HEIGHT / 2.0);
+        testPlayer.setPlayerY(SCENE_HEIGHT / 2);
         testPlayer.jump();
         testPlayer.move();
-        assertEquals(SCENE_HEIGHT / 2.0,testPlayer.getPlayerY());
+        assertEquals(SCENE_HEIGHT / 2,testPlayer.getPlayerY());
         testPlayer.setPlayerY(P_STARTY);
-        testPlayer.setGravity(100);
+        testPlayer.setGravity(10);
         testPlayer.jump();
         //about to jump
         assertEquals(JUMP_STRENGTH, testPlayer.getDy());
         assertEquals(P_STARTY,testPlayer.getPlayerY());
         //off the ground
         testPlayer.move();
-        assertEquals(JUMP_STRENGTH + 100, testPlayer.getDy());
-        assertEquals(P_STARTY - 100, testPlayer.getPlayerY());
+        assertEquals(JUMP_STRENGTH + 10, testPlayer.getDy());
+        assertEquals(P_STARTY + JUMP_STRENGTH + 10, testPlayer.getPlayerY());
         //about to come back down
         testPlayer.move();
-        assertEquals(JUMP_STRENGTH + 200, testPlayer.getDy());
-        assertEquals(P_STARTY - 100, testPlayer.getPlayerY());
+        assertEquals(JUMP_STRENGTH + 20, testPlayer.getDy());
+        assertEquals(P_STARTY + JUMP_STRENGTH + 10 + JUMP_STRENGTH + 20, testPlayer.getPlayerY());
         //on ground
         testPlayer.move();
-        assertEquals(JUMP_STRENGTH + 300, testPlayer.getDy());
-        assertEquals(P_STARTY, testPlayer.getPlayerY());
+        assertEquals(JUMP_STRENGTH + 30, testPlayer.getDy());
+        assertEquals(P_STARTY + JUMP_STRENGTH + 10 + JUMP_STRENGTH + 20 + JUMP_STRENGTH + 30,
+                    testPlayer.getPlayerY());
+        testPlayer.move();
         testPlayer.move();
         testPlayer.enforceWall();
         assertEquals(0, testPlayer.getDy());
@@ -263,33 +265,33 @@ public class TestPlayer {
         testPlayer.shoot();
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
         //left edge of player
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2.0 - 1);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 - 1);
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2.0);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2.0 + 1);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 + 1);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
         //right edge of player
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2.0 + 1);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 + 1);
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2.0);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2.0 - 1);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 - 1);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
         //top of player
         testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX);
-        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2.0 - 1);
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2 - 1);
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2.0);
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2.0 + 1);
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2 + 1);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
         //bottom of player
-        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2.0 + 1);
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2 + 1);
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2.0);
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2.0 - 1);
+        testPlayer.getPellets().getElement(0).setPelletY(P_STARTY + PLAYER_HEIGHT / 2 - 1);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
         //middle of player
         testPlayer.getPellets().getElement(0).setPelletY(P_STARTY);

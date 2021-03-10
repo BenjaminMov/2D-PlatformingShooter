@@ -2,11 +2,11 @@ package model;
 
 // Model of a player than can be controlled by the user
 public class Player {
-    private double playerX;
-    private double playerY;
-    private double dx;
-    private double dy;
-    private double gravity;
+    private int playerX;
+    private int playerY;
+    private int dx;
+    private int dy;
+    private int gravity;
     private Pellets pellets;
 
     private int magazine = 0;
@@ -17,12 +17,12 @@ public class Player {
     public static final int PLAYER_WIDTH = 16;
     public static final int PLAYER_HEIGHT = 20;
     public static final int RELOAD_AMOUNT = 3;
-    public static final double JUMP_STRENGTH = -200;
+    public static final int JUMP_STRENGTH = -33;
 
-    public static final double NORMAL_GRAVITY = 100;
+    public static final int NORMAL_GRAVITY = 2;
 
 
-    public Player(double x, double y) {
+    public Player(int x, int y) {
         this.playerX = x;
         this.playerY = y;
         dx = 0;
@@ -32,23 +32,23 @@ public class Player {
     }
 
     //getters
-    public double getPlayerX() {
+    public int getPlayerX() {
         return playerX;
     }
 
-    public double getPlayerY() {
+    public int getPlayerY() {
         return playerY;
     }
 
-    public double getDx() {
+    public int getDx() {
         return dx;
     }
 
-    public double getDy() {
+    public int getDy() {
         return dy;
     }
 
-    public double getGravity() {
+    public int getGravity() {
         return gravity;
     }
 
@@ -70,23 +70,23 @@ public class Player {
 
 
     //setters
-    public void setPlayerX(double playerX) {
+    public void setPlayerX(int playerX) {
         this.playerX = playerX;
     }
 
-    public void setPlayerY(double playerY) {
+    public void setPlayerY(int playerY) {
         this.playerY = playerY;
     }
 
-    public void setDx(double dx) {
+    public void setDx(int dx) {
         this.dx = dx;
     }
 
-    public void setDy(double dy) {
+    public void setDy(int dy) {
         this.dy = dy;
     }
 
-    public void setGravity(double gravity) {
+    public void setGravity(int gravity) {
         this.gravity = gravity;
     }
 
@@ -115,18 +115,18 @@ public class Player {
     //MODIFIES: playerX, playerY
     //EFFECTS: Ensures the player is unable to leave the bounds of the screen
     public void enforceWall() {
-        if (playerX - PLAYER_WIDTH / 2.0 + dx < 0) {
-            playerX = PLAYER_WIDTH / 2.0;
+        if (playerX - PLAYER_WIDTH / 2 + dx < 0) {
+            playerX = PLAYER_WIDTH / 2;
             dx = 0;
-        } else if (playerX + PLAYER_WIDTH / 2.0 + dx > World.SCENE_WIDTH) {
-            playerX = World.SCENE_WIDTH - PLAYER_WIDTH / 2.0;
+        } else if (playerX + PLAYER_WIDTH / 2 + dx > World.SCENE_WIDTH) {
+            playerX = World.SCENE_WIDTH - PLAYER_WIDTH / 2;
             dx = 0;
         }
-        if (playerY - PLAYER_HEIGHT / 2.0 + dy < 0) {
-            playerY = PLAYER_HEIGHT / 2.0;
+        if (playerY - PLAYER_HEIGHT / 2 + dy < 0) {
+            playerY = PLAYER_HEIGHT / 2;
             dy = 0;
-        } else if (playerY + PLAYER_HEIGHT / 2.0 + dy > World.SCENE_HEIGHT) {
-            playerY = World.SCENE_HEIGHT - PLAYER_HEIGHT / 2.0;
+        } else if (playerY + PLAYER_HEIGHT / 2 + dy > World.SCENE_HEIGHT) {
+            playerY = World.SCENE_HEIGHT - PLAYER_HEIGHT / 2;
             dy = 0;
         }
     }
@@ -138,11 +138,11 @@ public class Player {
     }
 
     // EFFECTS: returns where the pellet should start according to which direction the player is facing
-    public double pelletXStart() {
+    public int pelletXStart() {
         if (facingRight) {
-            return playerX + (PLAYER_WIDTH / 2.0) + (Pellet.PELLET_WIDTH / 2) + 1;
+            return playerX + (PLAYER_WIDTH / 2) + (Pellet.PELLET_WIDTH / 2) + 1;
         } else {
-            return playerX - (PLAYER_WIDTH / 2.0) - (Pellet.PELLET_WIDTH / 2) - 1;
+            return playerX - (PLAYER_WIDTH / 2) - (Pellet.PELLET_WIDTH / 2) - 1;
         }
     }
 
@@ -168,7 +168,7 @@ public class Player {
     // MODIFIES: dy
     // EFFECTS: suddenly sets player dy to face upwards, simulating a jump
     public void jump() {
-        if (playerY == World.SCENE_HEIGHT - PLAYER_HEIGHT / 2.0 || onPlatform) {
+        if (playerY == World.SCENE_HEIGHT - PLAYER_HEIGHT / 2 || onPlatform) {
             dy = JUMP_STRENGTH;
         }
     }
@@ -179,14 +179,19 @@ public class Player {
         boolean collidingx;
         boolean collidingy;
 
-        double leftx = playerX - PLAYER_WIDTH / 2.0;
-        double rightx = playerX + PLAYER_WIDTH / 2.0;
+        double leftx = playerX - PLAYER_WIDTH / 2;
+        double rightx = playerX + PLAYER_WIDTH / 2;
 
-        double topy = playerY - PLAYER_HEIGHT / 2.0;
-        double boty = playerY + PLAYER_HEIGHT / 2.0;
+        double topy = playerY - PLAYER_HEIGHT / 2;
+        double boty = playerY + PLAYER_HEIGHT / 2;
+
 
         for (Pellet p : otherPlayer.getPellets().getListOfPellets()) {
-            collidingx = leftx <= p.getPelletX() && p.getPelletX() <= rightx;
+
+            boolean goingThroughLeft = (p.getPelletX() < leftx) && (p.getPelletX() + p.getDx() > leftx);
+            boolean goingThroughRight = (p.getPelletX() > rightx) && (p.getPelletX() + p.getDx() < rightx);
+
+            collidingx = goingThroughLeft || goingThroughRight;
             collidingy = topy <= p.getPelletY() && p.getPelletY() <= boty;
             colliding = collidingx && collidingy;
 

@@ -73,9 +73,9 @@ public class JsonReader {
     // MODIFIES: wr
     // EFFECTS: parses thingy from JSON object and adds it to workroom
     private void addPlatform(Level lvl, JSONObject jsonObject) {
-        double platformX = jsonObject.getDouble("x");
-        double platformY = jsonObject.getDouble("y");
-        double platformWidth = jsonObject.getDouble("width");
+        int platformX = jsonObject.getInt("x");
+        int platformY = jsonObject.getInt("y");
+        int platformWidth = jsonObject.getInt("width");
         Platform platform = new Platform(platformX, platformY, platformWidth);
         lvl.addPlatform(platform);
     }

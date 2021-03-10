@@ -45,8 +45,8 @@ public class Pellets {
     }
 
     // EFFECTS: returns the current x position of all pellets in list
-    public ArrayList<Double> getAllPelletX() {
-        ArrayList<Double> pelletPositions = new ArrayList<>();
+    public ArrayList<Integer> getAllPelletX() {
+        ArrayList<Integer> pelletPositions = new ArrayList<>();
         for (Pellet p : pellets) {
             pelletPositions.add(p.getPelletX());
         }
@@ -54,8 +54,8 @@ public class Pellets {
     }
 
     // EFFECTS: returns the current x position of all pellets in list
-    public ArrayList<Double> getAllPelletY() {
-        ArrayList<Double> pelletPositions = new ArrayList<>();
+    public ArrayList<Integer> getAllPelletY() {
+        ArrayList<Integer> pelletPositions = new ArrayList<>();
         for (Pellet p : pellets) {
             pelletPositions.add(p.getPelletY());
         }

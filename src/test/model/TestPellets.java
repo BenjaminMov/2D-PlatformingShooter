@@ -17,9 +17,9 @@ public class TestPellets {
     @BeforeEach
     void runBefore() {
         testPellets = new Pellets();
-        testP1 = new Pellet(10.0,10.0,10.0);
-        testP2 = new Pellet(50.0, 50.0, 20.0);
-        testP3 = new Pellet(15.0, 25.0, 60.0);
+        testP1 = new Pellet(10,10,10);
+        testP2 = new Pellet(50, 50, 20);
+        testP3 = new Pellet(15, 25, 60);
 
         testPellets.addPellet(testP1);
         testPellets.addPellet(testP2);
@@ -29,26 +29,26 @@ public class TestPellets {
     @Test
     void testMovePelletsX() {
         //check x coords
-        ArrayList<Double> pelletListX = new ArrayList<>();
-        pelletListX.add(10.0);
-        pelletListX.add(50.0);
-        pelletListX.add(15.0);
+        ArrayList<Integer> pelletListX = new ArrayList<>();
+        pelletListX.add(10);
+        pelletListX.add(50);
+        pelletListX.add(15);
         assertEquals(pelletListX, testPellets.getAllPelletX());
         testPellets.movePellets();
         pelletListX.clear();
-        pelletListX.add(10.0 + 10.0);
-        pelletListX.add(50.0 + 20.0);
-        pelletListX.add(15.0 + 60.0);
+        pelletListX.add(10 + 10);
+        pelletListX.add(50 + 20);
+        pelletListX.add(15 + 60);
         assertEquals(pelletListX, testPellets.getAllPelletX());
     }
 
     @Test
     void testMovePelletsY() {
         //check y coords
-        ArrayList<Double> pelletListY = new ArrayList<>();
-        pelletListY.add(10.0);
-        pelletListY.add(50.0);
-        pelletListY.add(25.0);
+        ArrayList<Integer> pelletListY = new ArrayList<>();
+        pelletListY.add(10);
+        pelletListY.add(50);
+        pelletListY.add(25);
         assertEquals(pelletListY, testPellets.getAllPelletY());
         //no movement in y expected
         testPellets.movePellets();

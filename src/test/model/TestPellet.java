@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPellet {
 
-    private static final double MIDDLE_X = World.SCENE_WIDTH / 2.0;
-    private static final double MIDDLE_Y = World.SCENE_HEIGHT / 2.0;
+    private static final int MIDDLE_X = World.SCENE_WIDTH / 2;
+    private static final int MIDDLE_Y = World.SCENE_HEIGHT / 2;
     Pellet testPellet;
 
     @BeforeEach
