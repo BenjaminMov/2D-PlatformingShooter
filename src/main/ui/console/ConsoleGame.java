@@ -1,4 +1,4 @@
-package ui;
+package ui.console;
 
 import exceptions.NoRemainingPlatformException;
 import exceptions.NoSuchLevelNameException;

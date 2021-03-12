@@ -1,6 +1,6 @@
-package ui.Tools;
+package ui.gui.Tools;
 
-import ui.EditorPanel;
+import ui.gui.EditorPanel;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

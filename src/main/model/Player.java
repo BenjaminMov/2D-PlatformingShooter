@@ -17,9 +17,9 @@ public class Player {
     public static final int PLAYER_WIDTH = 16;
     public static final int PLAYER_HEIGHT = 20;
     public static final int RELOAD_AMOUNT = 3;
-    public static final int JUMP_STRENGTH = -33;
+    public static final int JUMP_STRENGTH = -19;
 
-    public static final int NORMAL_GRAVITY = 2;
+    public static final int NORMAL_GRAVITY = 1;
 
 
     public Player(int x, int y) {
@@ -100,6 +100,10 @@ public class Player {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    public void setMagazine(int magazine) {
+        this.magazine = magazine;
     }
 
     //MODIFIES: playerX, playerY, dy

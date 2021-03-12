@@ -1,37 +1,58 @@
-package ui;
+package ui.gui;
 
 import model.Level;
 import model.LevelBank;
 import model.Platform;
 import model.World;
 import persistence.JsonWriter;
-import ui.Tools.NewPlatformTool;
-import ui.Tools.Tool;
+import ui.gui.Tools.DeletePlatformTool;
+import ui.gui.Tools.NewPlatformTool;
+import ui.gui.Tools.Tool;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
-import static ui.FunGame.JSON_STORE;
+import static ui.gui.FunGame.JSON_STORE;
 
 public class EditorPanel extends JPanel {
 
     private Level designLevel;
+    private List<Tool> tools;
     private Tool activeTool;
     private JButton saveButton;
+    private JButton quitButton;
 
     private JsonWriter jsonWriter;
 
     public EditorPanel(FunGame funGame) {
-        designLevel = new Level("sample");
+        designLevel = new Level("No Name");
         jsonWriter = new JsonWriter(JSON_STORE);
+        tools = new ArrayList<>();
 
         setPreferredSize(new Dimension(World.SCENE_WIDTH, World.SCENE_HEIGHT));
         setBackground(Color.GRAY);
+        setLayout(new FlowLayout(FlowLayout.LEADING));
         createTools();
         initializeInteraction();
         makeSaveButton(funGame);
+        makeQuitButton(funGame);
+    }
+
+    private void makeQuitButton(FunGame funGame) {
+        quitButton = new JButton("Back To Menu");
+        this.add(quitButton);
+
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                funGame.dispose();
+                new FunGame();
+            }
+        });
     }
 
     private void makeSaveButton(FunGame funGame) {
@@ -84,8 +105,21 @@ public class EditorPanel extends JPanel {
         repaint();
     }
 
+    // EFFECTS: if activeTool != null, then mouseReleasedInDrawingArea is invoked on activeTool, depends on the
+    //          type of the tool which is currently activeTool
+    private void handleMouseReleased(MouseEvent e) {
+        if (activeTool != null) {
+            activeTool.mouseReleasedInEditingArea(e);
+        }
+        repaint();
+    }
+
     public Level getDesignLevel() {
         return designLevel;
+    }
+
+    public void setDesignLevel(Level designLevel) {
+        this.designLevel = designLevel;
     }
 
     // EFFECTS: translates the mouse event to current drawing's coordinate system
@@ -112,6 +146,10 @@ public class EditorPanel extends JPanel {
         add(toolArea, BorderLayout.SOUTH);
 
         NewPlatformTool npt = new NewPlatformTool(this, toolArea);
+        tools.add(npt);
+
+        DeletePlatformTool dpt = new DeletePlatformTool(this, toolArea);
+        tools.add(dpt);
 
         setActiveTool(npt);
     }
@@ -128,6 +166,7 @@ public class EditorPanel extends JPanel {
     private void saveLevel(Level level, LevelBank levelBank) {
         try {
             jsonWriter.open();
+            levelBank.getAllLevels().removeIf(lvl -> level.getLevelName().equals(lvl.getLevelName()));
             levelBank.addLevel(level);
             jsonWriter.write(levelBank);
             jsonWriter.close();
@@ -135,6 +174,10 @@ public class EditorPanel extends JPanel {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
+    }
+
+    public void setLevelName(String newLvlName) {
+        designLevel.setLevelName(newLvlName);
     }
 
     private class EditorMouseListener extends MouseAdapter {
@@ -149,7 +192,7 @@ public class EditorPanel extends JPanel {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-
+            handleMouseReleased(translateEvent(e));
         }
 
         @Override

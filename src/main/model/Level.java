@@ -11,7 +11,7 @@ import java.util.List;
 public class Level implements Writable {
 
     private final List<Platform> allPlatforms;
-    private final String levelName;
+    private String levelName;
 
     public Level(String levelName) {
         allPlatforms = new ArrayList<>();
@@ -28,6 +28,10 @@ public class Level implements Writable {
 
     public List<Platform> getPlatforms() {
         return allPlatforms;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
     }
 
     public void addPlatform(Platform platform) {
@@ -76,6 +80,7 @@ public class Level implements Writable {
 
         return jsonArray;
     }
+
 }
 
 

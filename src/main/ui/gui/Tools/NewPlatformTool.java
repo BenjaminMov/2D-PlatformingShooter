@@ -1,7 +1,7 @@
-package ui.Tools;
+package ui.gui.Tools;
 
 import model.Platform;
-import ui.EditorPanel;
+import ui.gui.EditorPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 public class NewPlatformTool extends Tool {
 
     private Point mousePoint;
+    private Platform designPlatform;
 
     public NewPlatformTool(EditorPanel editorPanel, JComponent parent) {
         super(editorPanel, parent);
@@ -19,28 +20,29 @@ public class NewPlatformTool extends Tool {
 
     @Override
     protected void createButton(JComponent parent) {
-        button = new JButton();
+        button = new JButton("New Platform");
         button = customizeButton(button);
     }
 
     @Override
     protected void addListener() {
-        button.addActionListener(new PlatformToolClickHandler());
+        button.addActionListener(new NewPlatformToolClickHandler());
     }
 
     @Override
     public void mousePressedInEditingArea(MouseEvent e) {
         mousePoint = e.getPoint();
+        designPlatform = new Platform(mousePoint.x, mousePoint.y, 0);
+        editorPanel.getDesignLevel().addPlatform(designPlatform);
     }
 
     @Override
     public void mouseDraggedInEditingArea(MouseEvent e) {
-        Platform designPlatform = new Platform(mousePoint.x, mousePoint.y, 0);
         designPlatform.setPlatformWidth(2 * (e.getX() - mousePoint.x));
-        editorPanel.getDesignLevel().addPlatform(designPlatform);
     }
 
-    private class PlatformToolClickHandler implements ActionListener {
+
+    private class NewPlatformToolClickHandler implements ActionListener {
 
         // EFFECTS: sets active tool to the new platform tool
         //          called by the framework when the tool is clicked

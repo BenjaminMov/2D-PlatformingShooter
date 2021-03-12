@@ -1,29 +1,37 @@
-package ui;
+package ui.gui;
 
+import com.sun.prism.paint.Gradient;
 import exceptions.NoWinnerException;
 import model.Pellet;
 import model.Platform;
 import model.Player;
 import model.World;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GamePanel extends JPanel {
 
     private static String over = "Game Over!";
-    private static final String REPLAY = "";
+    private static final String REPLAY = "Press R to play again";
+    private static final String MENU = "Press M to return to menu";
 
     private static final Integer AMMO_PADDING = 5;
     private static final Integer X_PADDING = 3;
 
     private World world;
 
-    public GamePanel(World world) {
+    private BufferedImage img;
 
+    public GamePanel(World world) {
         setPreferredSize(new Dimension(World.SCENE_WIDTH, World.SCENE_HEIGHT));
-        setBackground(Color.GRAY);
         this.world = world;
+        setBackground(Color.GRAY);
     }
 
     @Override
@@ -61,6 +69,7 @@ public class GamePanel extends JPanel {
             FontMetrics fm = g.getFontMetrics();
             centreString(winStr, g, fm, World.SCENE_HEIGHT / 2);
             centreString(REPLAY, g, fm, World.SCENE_HEIGHT / 2 + 50);
+            centreString(MENU, g, fm, World.SCENE_HEIGHT / 2 + 100);
             g.setColor(saved);
         } catch (NoWinnerException e) {
             e.printStackTrace();
@@ -92,6 +101,17 @@ public class GamePanel extends JPanel {
         g.fillRect(p.getPlayerX() - Player.PLAYER_WIDTH / 2, p.getPlayerY() - Player.PLAYER_HEIGHT / 2,
                    Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
         g.setColor(p1Colour);
+
+
+        try {
+            img = ImageIO.read(new File("./data/pixelBackground.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (p.getDy() < 0) {
+            g.drawImage(img, p.getPlayerX(), p.getPlayerY(), this);
+        }
     }
 
     private void drawPlayer2(Graphics g) {
@@ -153,6 +173,5 @@ public class GamePanel extends JPanel {
         g.fillOval(p.getPelletX() - Pellet.PELLET_WIDTH / 2, p.getPelletY() - Pellet.PELLET_HEIGHT / 2,
                 Pellet.PELLET_WIDTH, Pellet.PELLET_HEIGHT);
     }
-
 
 }

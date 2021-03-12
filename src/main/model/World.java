@@ -35,6 +35,14 @@ public class World {
         level = new Level("LevelAlpha");
     }
 
+    private void cleanUp() {
+        gameDone = false;
+        player1 = new Player(P1_STARTX, P_STARTY);
+        player2 = new Player(P2_STARTX, P_STARTY);
+        player1.setMagazine(0);
+        player2.setMagazine(0);
+    }
+
     // MODIFIES: player1, player2, gameDone
     // EFFECTS: implements physics and boundaries for all players, also removes players if shot
     //          ends the game if player has been shot
@@ -126,6 +134,10 @@ public class World {
             player2.reload();
         } else if (keyInput == KeyEvent.VK_H) {
             player2.shoot();
+        }
+
+        if (keyInput == KeyEvent.VK_R && gameDone) {
+            cleanUp();
         }
     }
 

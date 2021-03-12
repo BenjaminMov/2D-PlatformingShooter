@@ -1,23 +1,17 @@
-package ui;
+package ui.gui;
 
 import exceptions.NoSuchLevelNameException;
 import model.Level;
 import model.LevelBank;
 import model.World;
 import persistence.JsonReader;
-import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FunGame extends JFrame {
 
@@ -39,55 +33,99 @@ public class FunGame extends JFrame {
         setUndecorated(true);
         initialize();
 
-        String[] options = {"Play", "New Level", "Quit"};
+        String[] options = {"Play", "Level Editor", "Quit"};
 
         int choice = JOptionPane.showOptionDialog(null, "Fun Game",
                 "Welcome!",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
-        processChoice(choice);
+        processMenuChoice(choice);
     }
 
     //MODIFIES: this
     //EFFECTS: presents a new panel depending on choice of user
-    private void processChoice(int choice) {
-        if (choice == 0) {
-            chooseLevel();
-            add(gp);
-            addKeyListener(new KeyHandler());
-            pack();
-            centreOnScreen();
-            setVisible(true);
-            addTimer();
-        } else if (choice == 1) {
-            askLevelName();
-            add(ep);
-            addKeyListener(new KeyHandler());
-            pack();
-            centreOnScreen();
-            setVisible(true);
-            addTimer(); //for animation
-        } else {
-            this.dispose();
+    private void processMenuChoice(int choice) {
+        switch (choice) {
+            case 0:
+                loadLevel(chooseLevel());
+                add(gp);
+                addKeyListener(new KeyHandler());
+                pack();
+                centreOnScreen();
+                setVisible(true);
+                addTimer();
+                break;
+            case 1:
+                runLevelEditor();
+                break;
+            default:
+                this.dispose();
+                break;
         }
     }
 
-    private void askLevelName() {
+    private void runLevelEditor() {
+        String[] options = {"New Level", "Edit Levels", "Back"};
 
-        String newLvlName = (String)JOptionPane.showInputDialog(null, "Choose your Level",
-                "Level Select", JOptionPane.QUESTION_MESSAGE, null, null, null);
+        int choice = JOptionPane.showOptionDialog(null, "Level Editor",
+                "What would you like to do?",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
-
+        switch (choice) {
+            case 0:
+                askNewLevelName();
+                add(ep);
+                pack();
+                centreOnScreen();
+                setVisible(true);
+                break;
+            case 1:
+                try {
+                    Level editingLevel = levelBank.findLevel(chooseLevel());
+                    ep.setDesignLevel(editingLevel);
+                    add(ep);
+                    pack();
+                    centreOnScreen();
+                    setVisible(true);
+                    break;
+                } catch (NoSuchLevelNameException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            default: {
+                dispose();
+                new FunGame();
+                break;
+            }
+        }
     }
 
-    private void chooseLevel() {
+    private void askNewLevelName() {
+
+        String newLvlName = (String)JOptionPane.showInputDialog(null, "Level Name",
+                "Level Select", JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+        if (newLvlName == null ||  ("".equals(newLvlName))) {
+            dispose();
+            new FunGame();
+        }
+
+        ep.setLevelName(newLvlName);
+    }
+
+    private String chooseLevel() {
 
         String[] available = availableLevels.toArray(new String[0]);
 
         String chosenLvl = (String)JOptionPane.showInputDialog(null, "Choose your Level",
                 "Level Select", JOptionPane.QUESTION_MESSAGE, null, available, available[0]);
 
-        loadLevel(chosenLvl);
+        if (chosenLvl == null ||  ("".equals(chosenLvl))) {
+            dispose();
+            new FunGame();
+        }
+
+        return chosenLvl;
     }
 
     // EFFECTS: instantiates a new world and sets up storages
@@ -140,6 +178,14 @@ public class FunGame extends JFrame {
         @Override
         public void keyPressed(KeyEvent e) {
             world.keyPressed(e.getKeyCode());
+            killGameKey(e.getKeyCode());
+        }
+
+        public void killGameKey(int keyCode) {
+            if (keyCode == KeyEvent.VK_M && world.getIfGameOver()) {
+                dispose();
+                new FunGame();
+            }
         }
 
         @Override
