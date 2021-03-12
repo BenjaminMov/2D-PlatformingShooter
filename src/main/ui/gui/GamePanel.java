@@ -1,21 +1,22 @@
 package ui.gui;
 
-import com.sun.prism.paint.Gradient;
 import exceptions.NoWinnerException;
 import model.Pellet;
 import model.Platform;
 import model.Player;
 import model.World;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GamePanel extends JPanel {
+
 
     private static String over = "Game Over!";
     private static final String REPLAY = "Press R to play again";
@@ -25,8 +26,6 @@ public class GamePanel extends JPanel {
     private static final Integer X_PADDING = 3;
 
     private World world;
-
-    private BufferedImage img;
 
     public GamePanel(World world) {
         setPreferredSize(new Dimension(World.SCENE_WIDTH, World.SCENE_HEIGHT));
@@ -84,44 +83,30 @@ public class GamePanel extends JPanel {
     }
 
     private void drawGame(Graphics g) {
-        drawPlayer1(g);
-        drawPlayer2(g);
+        Player p1 = world.getPlayer1();
+        Player p2 = world.getPlayer2();
+
+        drawPlayer(g, p1, World.P1_COLOUR);
+        drawPlayer(g, p2, World.P2_COLOUR);
+
+        drawPlayerPellets(g, p1);
+        drawPlayerPellets(g, p2);
+
         drawPlatforms(g);
-        drawP1Pellets(g);
-        drawP2Pellets(g);
-        showAmmo(g, world.getPlayer1());
-        showAmmo(g, world.getPlayer2());
     }
 
 
-    private void drawPlayer1(Graphics g) {
-        Player p = world.getPlayer1();
-        Color p1Colour = g.getColor();
-        g.setColor(World.P1_COLOUR);
+
+    private void drawPlayer(Graphics g, Player p, Color color) {
+        Color playerColour = g.getColor();
+        g.setColor(color);
         g.fillRect(p.getPlayerX() - Player.PLAYER_WIDTH / 2, p.getPlayerY() - Player.PLAYER_HEIGHT / 2,
                    Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
-        g.setColor(p1Colour);
+        g.setColor(playerColour);
+        showAmmo(g, p);
 
-
-        try {
-            img = ImageIO.read(new File("./data/pixelBackground.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (p.getDy() < 0) {
-            g.drawImage(img, p.getPlayerX(), p.getPlayerY(), this);
-        }
     }
 
-    private void drawPlayer2(Graphics g) {
-        Player p = world.getPlayer2();
-        Color p2Colour = g.getColor();
-        g.setColor(World.P2_COLOUR);
-        g.fillRect(p.getPlayerX() - Player.PLAYER_WIDTH / 2, p.getPlayerY() - Player.PLAYER_HEIGHT / 2,
-                Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
-        g.setColor(p2Colour);
-    }
 
     private void showAmmo(Graphics g, Player p) {
         Color saved = g.getColor();
@@ -133,6 +118,7 @@ public class GamePanel extends JPanel {
                 p.getPlayerY() - Player.PLAYER_HEIGHT / 2 - AMMO_PADDING);
         g.setColor(saved);
     }
+
 
     private void drawPlatforms(Graphics g) {
         for (Platform p : world.getLevel().getPlatforms()) {
@@ -148,30 +134,16 @@ public class GamePanel extends JPanel {
         g.setColor(colourP);
     }
 
-    private void drawP1Pellets(Graphics g) {
-        for (Pellet p : world.getPlayer1().getPellets().getListOfPellets()) {
-            drawP1Pellet(g, p);
+
+    private void drawPlayerPellets(Graphics g, Player player) {
+        for (Pellet p : player.getPellets().getListOfPellets()) {
+            drawPlayerPellet(g, p);
         }
     }
 
-    private void drawP1Pellet(Graphics g, Pellet p) {
-        Color pelletColour = g.getColor();
+    private void drawPlayerPellet(Graphics g, Pellet p) {
         g.setColor(World.PELLET_COLOUR);
         g.fillOval(p.getPelletX() - Pellet.PELLET_WIDTH / 2, p.getPelletY() - Pellet.PELLET_HEIGHT / 2,
                   Pellet.PELLET_WIDTH, Pellet.PELLET_HEIGHT);
     }
-
-    private void drawP2Pellets(Graphics g) {
-        for (Pellet p : world.getPlayer2().getPellets().getListOfPellets()) {
-            drawP2Pellet(g, p);
-        }
-    }
-
-    private void drawP2Pellet(Graphics g, Pellet p) {
-        Color pelletColour = g.getColor();
-        g.setColor(World.PELLET_COLOUR);
-        g.fillOval(p.getPelletX() - Pellet.PELLET_WIDTH / 2, p.getPelletY() - Pellet.PELLET_HEIGHT / 2,
-                Pellet.PELLET_WIDTH, Pellet.PELLET_HEIGHT);
-    }
-
 }

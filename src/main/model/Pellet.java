@@ -8,7 +8,7 @@ public class Pellet {
     private int dx;
 
     public static final int PELLET_WIDTH = 4;
-    public static final int PELLET_HEIGHT = 2;
+    public static final int PELLET_HEIGHT = 4;
 
     public static final int SHOT_SPEED = 30;
 

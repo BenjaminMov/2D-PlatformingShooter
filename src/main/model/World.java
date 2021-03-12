@@ -2,11 +2,14 @@ package model;
 
 //import java.awt.event.KeyEvent;
 
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //Model of the world where 2 players play the game
-public class World {
+public class World extends Timer {
     public static final int SCENE_WIDTH = 800;
     public static final int SCENE_HEIGHT = 600;
     public static final int SPEEDX = 10;
@@ -15,6 +18,8 @@ public class World {
     public static final int P2_STARTX = 3 * SCENE_WIDTH / 4;
     private boolean gameDone = false;
 
+    public static final double RELOAD_DELAY = 1000;
+
     private Player player1;
     private Player player2;
     private Level level;
@@ -22,7 +27,7 @@ public class World {
     public static final Color P1_COLOUR = new Color(250,50,50);
     public static final Color P2_COLOUR = new Color(50,200,250);
     public static final Color PLATFORM_COLOUR = new Color(0,0,0);
-    public static final Color PELLET_COLOUR = new Color(255,190,190);
+    public static final Color PELLET_COLOUR = new Color(250,190,190);
 
 
     public World() {
@@ -107,37 +112,53 @@ public class World {
         }
     }
 
+    public void reloadWithDelay(Player player) {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                player.reload();
+                player.setCanMove(true);
+            }
+        };
+        player.setCanMove(false);
+        schedule(timerTask, (long) RELOAD_DELAY);
+    }
+
     public void keyPressed(int keyInput) {
-        if (keyInput == KeyEvent.VK_LEFT) {
-            player1.setDx(-SPEEDX);
-            player1.setFacingRight(false);
-        } else if (keyInput == KeyEvent.VK_RIGHT) {
-            player1.setDx(SPEEDX);
-            player1.setFacingRight(true);
-        } else if (keyInput == KeyEvent.VK_UP) {
-            player1.jump();
-        } else if (keyInput == KeyEvent.VK_NUMPAD4) {
-            player1.reload();
-        } else if (keyInput == KeyEvent.VK_NUMPAD5) {
-            player1.shoot();
+        if (player1.isCanMove()) {
+            if (keyInput == KeyEvent.VK_LEFT) {
+                player1.setDx(-SPEEDX);
+                player1.setFacingRight(false);
+            } else if (keyInput == KeyEvent.VK_RIGHT) {
+                player1.setDx(SPEEDX);
+                player1.setFacingRight(true);
+            } else if (keyInput == KeyEvent.VK_UP) {
+                player1.jump();
+            } else if (keyInput == KeyEvent.VK_NUMPAD4) {
+                reloadWithDelay(player1);
+            } else if (keyInput == KeyEvent.VK_NUMPAD5) {
+                player1.shoot();
+            }
         }
 
-        if (keyInput == KeyEvent.VK_A) {
-            player2.setDx(-SPEEDX);
-            player2.setFacingRight(false);
-        } else if (keyInput == KeyEvent.VK_D) {
-            player2.setDx(SPEEDX);
-            player2.setFacingRight(true);
-        } else if (keyInput == KeyEvent.VK_W) {
-            player2.jump();
-        } else if (keyInput == KeyEvent.VK_J) {
-            player2.reload();
-        } else if (keyInput == KeyEvent.VK_H) {
-            player2.shoot();
-        }
+        if (player2.isCanMove()) {
+            if (keyInput == KeyEvent.VK_A) {
+                player2.setDx(-SPEEDX);
+                player2.setFacingRight(false);
+            } else if (keyInput == KeyEvent.VK_D) {
+                player2.setDx(SPEEDX);
+                player2.setFacingRight(true);
+            } else if (keyInput == KeyEvent.VK_W) {
+                player2.jump();
+            } else if (keyInput == KeyEvent.VK_J) {
+                reloadWithDelay(player2);
+            } else if (keyInput == KeyEvent.VK_K) {
+                player2.shoot();
+            }
 
-        if (keyInput == KeyEvent.VK_R && gameDone) {
-            cleanUp();
+            if (keyInput == KeyEvent.VK_R && gameDone) {
+                cleanUp();
+            }
         }
     }
 

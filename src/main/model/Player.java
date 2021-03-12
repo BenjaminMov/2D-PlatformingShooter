@@ -14,6 +14,8 @@ public class Player {
     private boolean onPlatform;
     private boolean alive = true;
 
+    private boolean canMove = true;
+
     public static final int PLAYER_WIDTH = 16;
     public static final int PLAYER_HEIGHT = 20;
     public static final int RELOAD_AMOUNT = 3;
@@ -68,6 +70,9 @@ public class Player {
         return facingRight;
     }
 
+    public boolean isCanMove() {
+        return canMove;
+    }
 
     //setters
     public void setPlayerX(int playerX) {
@@ -104,6 +109,10 @@ public class Player {
 
     public void setMagazine(int magazine) {
         this.magazine = magazine;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 
     //MODIFIES: playerX, playerY, dy
