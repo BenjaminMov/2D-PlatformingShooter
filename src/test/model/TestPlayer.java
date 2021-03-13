@@ -206,7 +206,7 @@ public class TestPlayer {
         testPlayer.setFacingRight(true);
         testPlayer.shoot();
         assertFalse(testPlayer.getPellets().isEmpty());
-        assertTrue(testPlayer.getFacingRight());
+        assertTrue(testPlayer.isFacingRight());
         assertEquals(testPlayer.pelletXStart(), testPlayer.getPellets().getElement(0).getPelletX());
         assertEquals(testPlayer.getPlayerY(), testPlayer.getPellets().getElement(0).getPelletY());
         assertEquals(Player.RELOAD_AMOUNT - 1, testPlayer.getMagazine());
@@ -265,20 +265,30 @@ public class TestPlayer {
         testPlayer.shoot();
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
         //left edge of player
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 - 1);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 - Pellet.SHOT_SPEED - 2);
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 - Pellet.SHOT_SPEED - 1);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 - Pellet.SHOT_SPEED);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 + 1);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 - Pellet.SHOT_SPEED + 1);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX - PLAYER_WIDTH / 2 - Pellet.SHOT_SPEED + 2);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
         //right edge of player
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 + 1);
+        testPlayer.getPellets().getElement(0).setDx(-Pellet.SHOT_SPEED);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 + Pellet.SHOT_SPEED + 2);
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 + Pellet.SHOT_SPEED + 1);
+        assertFalse(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 + Pellet.SHOT_SPEED);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
-        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 - 1);
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 + Pellet.SHOT_SPEED - 1);
+        assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
+        testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX + PLAYER_WIDTH / 2 + Pellet.SHOT_SPEED - 2);
         assertTrue(testPlayer2.checkifGotShotBy(testPlayer));
         //top of player
+        testPlayer.getPellets().getElement(0).setDx(Pellet.SHOT_SPEED);
         testPlayer.getPellets().getElement(0).setPelletX(P2_STARTX);
         testPlayer.getPellets().getElement(0).setPelletY(P_STARTY - PLAYER_HEIGHT / 2 - 1);
         assertFalse(testPlayer2.checkifGotShotBy(testPlayer));

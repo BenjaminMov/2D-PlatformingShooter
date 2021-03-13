@@ -9,7 +9,7 @@ public class Platform implements Writable {
     private int platformY;
     private int platformWidth;
 
-    public static final int PLATFORM_HEIGHT = 2;
+    public static final int PLATFORM_HEIGHT = 3;
 
     public Platform(int x, int y, int width) {
         platformX = x;

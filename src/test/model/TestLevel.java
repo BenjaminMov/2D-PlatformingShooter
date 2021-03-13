@@ -42,6 +42,8 @@ public class TestLevel {
             assertEquals(testLevel1, testLevelBank.findLevel("hellooooLvl1"));
             assertEquals(0, testLevel1.getPlatforms().size());
             assertEquals("hellooooLvl1", testLevelBank.findLevel("hellooooLvl1").getLevelName());
+            testLevel1.setLevelName("byebye");
+            assertEquals("byebye", testLevelBank.findLevel("byebye").getLevelName());
         } catch (NoSuchLevelNameException e) {
             e.printStackTrace();
             fail();

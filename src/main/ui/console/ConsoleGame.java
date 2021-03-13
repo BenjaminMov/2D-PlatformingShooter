@@ -191,7 +191,7 @@ public class ConsoleGame {
                          + "\t y: " + world.getPlayer1().getPlayerY());
         System.out.println("\t dx: " + world.getPlayer1().getDx()
                          + "\t dy " + world.getPlayer1().getDy());
-        System.out.println("\t facingRight? " + world.getPlayer1().getFacingRight());
+        System.out.println("\t facingRight? " + world.getPlayer1().isFacingRight());
         System.out.println("\t onScreenPellets " + world.getPlayer1().getPellets().getAllPelletX());
 
         System.out.println("Player2:");
@@ -199,7 +199,7 @@ public class ConsoleGame {
                          + "\t y: " + world.getPlayer2().getPlayerY());
         System.out.println("\t dx: " + world.getPlayer2().getDx()
                          + "\t dy " + world.getPlayer2().getDy());
-        System.out.println("\t facingRight? " + world.getPlayer2().getFacingRight());
+        System.out.println("\t facingRight? " + world.getPlayer2().isFacingRight());
         System.out.println("\t onScreenPellets " + world.getPlayer2().getPellets().getAllPelletX());
     }
 

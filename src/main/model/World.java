@@ -18,14 +18,14 @@ public class World extends Timer {
     public static final int P2_STARTX = 3 * SCENE_WIDTH / 4;
     private boolean gameDone = false;
 
-    public static final double RELOAD_DELAY = 1000;
+    public static final long RELOAD_DELAY = 1000;
 
     private Player player1;
     private Player player2;
     private Level level;
 
     public static final Color P1_COLOUR = new Color(250,50,50);
-    public static final Color P2_COLOUR = new Color(50,200,250);
+    public static final Color P2_COLOUR = new Color(30,144,255);
     public static final Color PLATFORM_COLOUR = new Color(0,0,0);
     public static final Color PELLET_COLOUR = new Color(250,190,190);
 
@@ -125,50 +125,58 @@ public class World extends Timer {
     }
 
     public void keyPressed(int keyInput) {
+
         if (player1.isCanMove()) {
-            if (keyInput == KeyEvent.VK_LEFT) {
-                player1.setDx(-SPEEDX);
-                player1.setFacingRight(false);
-            } else if (keyInput == KeyEvent.VK_RIGHT) {
-                player1.setDx(SPEEDX);
-                player1.setFacingRight(true);
-            } else if (keyInput == KeyEvent.VK_UP) {
-                player1.jump();
-            } else if (keyInput == KeyEvent.VK_NUMPAD4) {
-                reloadWithDelay(player1);
-            } else if (keyInput == KeyEvent.VK_NUMPAD5) {
-                player1.shoot();
-            }
+            player1KeyEvent(keyInput);
         }
 
         if (player2.isCanMove()) {
-            if (keyInput == KeyEvent.VK_A) {
-                player2.setDx(-SPEEDX);
-                player2.setFacingRight(false);
-            } else if (keyInput == KeyEvent.VK_D) {
-                player2.setDx(SPEEDX);
-                player2.setFacingRight(true);
-            } else if (keyInput == KeyEvent.VK_W) {
-                player2.jump();
-            } else if (keyInput == KeyEvent.VK_J) {
-                reloadWithDelay(player2);
-            } else if (keyInput == KeyEvent.VK_K) {
-                player2.shoot();
-            }
+            player2KeyEvent(keyInput);
+        }
 
-            if (keyInput == KeyEvent.VK_R && gameDone) {
-                cleanUp();
-            }
+        if (keyInput == KeyEvent.VK_R && gameDone) {
+            cleanUp();
         }
     }
 
+    private void player1KeyEvent(int keyInput) {
+        if (keyInput == KeyEvent.VK_A) {
+            player1.setDx(-SPEEDX);
+            player1.setFacingRight(false);
+        } else if (keyInput == KeyEvent.VK_D) {
+            player1.setDx(SPEEDX);
+            player1.setFacingRight(true);
+        } else if (keyInput == KeyEvent.VK_W) {
+            player1.jump();
+        } else if (keyInput == KeyEvent.VK_J) {
+            reloadWithDelay(player1);
+        } else if (keyInput == KeyEvent.VK_K) {
+            player1.shoot();
+        }
+    }
+
+    private void player2KeyEvent(int keyInput) {
+        if (keyInput == KeyEvent.VK_LEFT) {
+            player2.setDx(-SPEEDX);
+            player2.setFacingRight(false);
+        } else if (keyInput == KeyEvent.VK_RIGHT) {
+            player2.setDx(SPEEDX);
+            player2.setFacingRight(true);
+        } else if (keyInput == KeyEvent.VK_UP) {
+            player2.jump();
+        } else if (keyInput == KeyEvent.VK_NUMPAD4 || keyInput == KeyEvent.VK_9) {
+            reloadWithDelay(player2);
+        } else if (keyInput == KeyEvent.VK_NUMPAD5 || keyInput == KeyEvent.VK_0) {
+            player2.shoot();
+        }
+    }
 
     public void keyReleased(int keyInput) {
-        if (keyInput == KeyEvent.VK_LEFT || keyInput == KeyEvent.VK_RIGHT) {
+        if (keyInput == KeyEvent.VK_A || keyInput == KeyEvent.VK_D) {
             player1.setDx(0);
         }
 
-        if (keyInput == KeyEvent.VK_A || keyInput == KeyEvent.VK_D) {
+        if (keyInput == KeyEvent.VK_LEFT || keyInput == KeyEvent.VK_RIGHT) {
             player2.setDx(0);
         }
     }

@@ -1,6 +1,7 @@
 package ui.gui;
 
 import exceptions.NoWinnerException;
+import javafx.scene.Scene;
 import model.Pellet;
 import model.Platform;
 import model.Player;
@@ -8,17 +9,11 @@ import model.World;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.text.AttributedCharacterIterator;
 
 public class GamePanel extends JPanel {
 
 
-    private static String over = "Game Over!";
     private static final String REPLAY = "Press R to play again";
     private static final String MENU = "Press M to return to menu";
 
@@ -30,13 +25,19 @@ public class GamePanel extends JPanel {
     public GamePanel(World world) {
         setPreferredSize(new Dimension(World.SCENE_WIDTH, World.SCENE_HEIGHT));
         this.world = world;
-        setBackground(Color.GRAY);
+    }
+
+    private void setBackground(Graphics g) {
+        Image img = Toolkit.getDefaultToolkit().getImage("./data/152706522.jpg");
+
+        g.drawImage(img, 0,0, World.SCENE_WIDTH,World.SCENE_HEIGHT, null);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        setBackground(g);
         drawGame(g);
 
         if (world.getIfGameOver()) {
@@ -63,8 +64,8 @@ public class GamePanel extends JPanel {
         try {
             String winStr = getWinner();
             Color saved = g.getColor();
-            g.setColor(new Color(0, 0, 0));
-            g.setFont(new Font("Arial", 20, 20));
+            g.setColor(new Color(0,0,0));
+            g.setFont(new Font("Arial", Font.PLAIN, 20));
             FontMetrics fm = g.getFontMetrics();
             centreString(winStr, g, fm, World.SCENE_HEIGHT / 2);
             centreString(REPLAY, g, fm, World.SCENE_HEIGHT / 2 + 50);
@@ -110,10 +111,8 @@ public class GamePanel extends JPanel {
 
     private void showAmmo(Graphics g, Player p) {
         Color saved = g.getColor();
-        g.setColor(new Color(0, 0, 0));
-        g.setFont(new Font("Arial", Font.PLAIN, 10));
-        FontMetrics fm = g.getFontMetrics();
-        //centreString(p.getMagazine().toString(), g, fm, p.getPlayerY() - Player.PLAYER_HEIGHT / 2 - AMMO_PADDING);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 12));
         g.drawString(p.getMagazine().toString(), p.getPlayerX() - X_PADDING,
                 p.getPlayerY() - Player.PLAYER_HEIGHT / 2 - AMMO_PADDING);
         g.setColor(saved);

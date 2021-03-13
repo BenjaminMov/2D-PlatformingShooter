@@ -66,7 +66,7 @@ public class Player {
         return alive;
     }
 
-    public boolean getFacingRight() {
+    public boolean isFacingRight() {
         return facingRight;
     }
 
@@ -201,8 +201,8 @@ public class Player {
 
         for (Pellet p : otherPlayer.getPellets().getListOfPellets()) {
 
-            boolean goingThroughLeft = (p.getPelletX() < leftx) && (p.getPelletX() + p.getDx() > leftx);
-            boolean goingThroughRight = (p.getPelletX() > rightx) && (p.getPelletX() + p.getDx() < rightx);
+            boolean goingThroughLeft = (p.getPelletX() <= rightx) && (p.getPelletX() + p.getDx() >= leftx);
+            boolean goingThroughRight = (p.getPelletX() >= leftx) && (p.getPelletX() + p.getDx() <= rightx);
 
             collidingx = goingThroughLeft || goingThroughRight;
             collidingy = topy <= p.getPelletY() && p.getPelletY() <= boty;

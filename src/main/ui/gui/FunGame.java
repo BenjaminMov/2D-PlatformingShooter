@@ -6,10 +6,12 @@ import model.LevelBank;
 import model.World;
 import persistence.JsonReader;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -80,23 +82,26 @@ public class FunGame extends JFrame {
                 setVisible(true);
                 break;
             case 1:
-                try {
-                    Level editingLevel = levelBank.findLevel(chooseLevel());
-                    ep.setDesignLevel(editingLevel);
-                    add(ep);
-                    pack();
-                    centreOnScreen();
-                    setVisible(true);
-                    break;
-                } catch (NoSuchLevelNameException e) {
-                    e.printStackTrace();
-                    break;
-                }
+                runEditingOldLevel();
+                break;
             default: {
                 dispose();
                 new FunGame();
                 break;
             }
+        }
+    }
+
+    private void runEditingOldLevel() {
+        try {
+            Level editingLevel = levelBank.findLevel(chooseLevel());
+            ep.setDesignLevel(editingLevel);
+            add(ep);
+            pack();
+            centreOnScreen();
+            setVisible(true);
+        } catch (NoSuchLevelNameException e) {
+            e.printStackTrace();
         }
     }
 
@@ -109,12 +114,10 @@ public class FunGame extends JFrame {
             dispose();
             new FunGame();
         }
-
         ep.setLevelName(newLvlName);
     }
 
     private String chooseLevel() {
-
         String[] available = availableLevels.toArray(new String[0]);
 
         String chosenLvl = (String)JOptionPane.showInputDialog(null, "Choose your Level",
@@ -124,7 +127,6 @@ public class FunGame extends JFrame {
             dispose();
             new FunGame();
         }
-
         return chosenLvl;
     }
 
