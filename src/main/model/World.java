@@ -34,12 +34,14 @@ public class World extends Timer {
         setUp();
     }
 
+    //EFFECTS: sets up the world
     private void setUp() {
         player1 = new Player(P1_STARTX, P_STARTY);
         player2 = new Player(P2_STARTX, P_STARTY);
         level = new Level("LevelAlpha");
     }
 
+    //EFFECTS: resets the world without removing the level
     private void cleanUp() {
         gameDone = false;
         player1 = new Player(P1_STARTX, P_STARTY);
@@ -67,6 +69,7 @@ public class World extends Timer {
         checkIfGameEnd();
     }
 
+    //getters
     public Player getPlayer1() {
         return player1;
     }
@@ -79,21 +82,18 @@ public class World extends Timer {
         return level;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
     public Boolean getIfGameOver() {
         return gameDone;
+    }
+
+    //setters
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public void setIfGameOver(Boolean over) {
         gameDone = over;
     }
-
-    /*
-
-     */
 
     // MODIFIES: player
     // EFFECTS: if player has been shot by themselves or the other player, set 'alive' to false
@@ -103,7 +103,6 @@ public class World extends Timer {
         }
     }
 
-
     // MODIFIES: gameDone
     // EFFECTS: if any player is not alive, set gameDone to true
     private void checkIfGameEnd() {
@@ -112,6 +111,8 @@ public class World extends Timer {
         }
     }
 
+    //MODIFIES: canMove
+    //EFFECTS: lets the player reload after RELOAD_DELAY time
     public void reloadWithDelay(Player player) {
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -121,9 +122,10 @@ public class World extends Timer {
             }
         };
         player.setCanMove(false);
-        schedule(timerTask, (long) RELOAD_DELAY);
+        schedule(timerTask,  RELOAD_DELAY);
     }
 
+    //EFFECTS: handles if a key was pressed
     public void keyPressed(int keyInput) {
 
         if (player1.isCanMove()) {
@@ -139,6 +141,8 @@ public class World extends Timer {
         }
     }
 
+    //MODIFIES: player1
+    //EFFECTS: handles key events for player 1
     private void player1KeyEvent(int keyInput) {
         if (keyInput == KeyEvent.VK_A) {
             player1.setDx(-SPEEDX);
@@ -155,6 +159,8 @@ public class World extends Timer {
         }
     }
 
+    //MODIFIES: player2
+    //EFFECTS: handles key events for player 2
     private void player2KeyEvent(int keyInput) {
         if (keyInput == KeyEvent.VK_LEFT) {
             player2.setDx(-SPEEDX);
@@ -171,6 +177,8 @@ public class World extends Timer {
         }
     }
 
+    //MODIFIES: player1, player2
+    //EFFECTS: sets player velocities to 0 after key release
     public void keyReleased(int keyInput) {
         if (keyInput == KeyEvent.VK_A || keyInput == KeyEvent.VK_D) {
             player1.setDx(0);

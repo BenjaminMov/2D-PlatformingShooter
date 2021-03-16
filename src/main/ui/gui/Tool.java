@@ -1,6 +1,4 @@
-package ui.gui.Tools;
-
-import ui.gui.EditorPanel;
+package ui.gui;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -52,12 +50,6 @@ public abstract class Tool {
 
     // EFFECTS: default behaviour does nothing
     public void mousePressedInEditingArea(MouseEvent e) {}
-
-    // EFFECTS: default behaviour does nothing
-    public void mouseReleasedInEditingArea(MouseEvent e) {}
-
-    // EFFECTS: default behaviour does nothing
-    public void mouseClickedInEditingArea(MouseEvent e) {}
 
     // EFFECTS: default behaviour does nothing
     public void mouseDraggedInEditingArea(MouseEvent e) {}

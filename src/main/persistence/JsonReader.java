@@ -20,7 +20,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads levelBank from file and returns it;
     // throws IOException if an error occurs reading data from file
     public LevelBank read() throws IOException {
         String jsonData = readFile(source);
@@ -39,12 +39,15 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: Parses levelBank and returns it
     private LevelBank parseLevelBank(JSONObject jsonObject) {
         LevelBank lvlbnk = new LevelBank();
         addLevels(lvlbnk, jsonObject);
         return lvlbnk;
     }
 
+    // MODIFIES: levelBank
+    // EFFECTS: parses levels from JSON and adds it to levelBank
     private void addLevels(LevelBank lvlbnk, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("levels");
         for (Object json : jsonArray) {
@@ -53,6 +56,8 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: levelBank
+    // EFFECTS: parses level from JSON and adds it to levelBank
     private void addLevel(LevelBank lvls, JSONObject jsonObject) {
         String name = jsonObject.getString("levelName");
         Level lvl = new Level(name);
@@ -60,7 +65,7 @@ public class JsonReader {
         lvls.addLevel(lvl);
     }
 
-    // MODIFIES: wr
+    // MODIFIES: level
     // EFFECTS: parses platforms from JSON object and adds them to Level
     private void addPlatforms(Level lvl, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("platforms");
@@ -70,8 +75,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: level
+    // EFFECTS: parses thingy from JSON object and adds it to level
     private void addPlatform(Level lvl, JSONObject jsonObject) {
         int platformX = jsonObject.getInt("x");
         int platformY = jsonObject.getInt("y");

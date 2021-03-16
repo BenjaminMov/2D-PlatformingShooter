@@ -1,7 +1,6 @@
-package ui.gui.Tools;
+package ui.gui;
 
 import model.Platform;
-import ui.gui.EditorPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+//Tool that is used to delete platforms in the editor
 public class DeletePlatformTool extends Tool {
 
     private EditorPanel designPanel;
@@ -18,12 +18,14 @@ public class DeletePlatformTool extends Tool {
         designPanel = editorPanel;
     }
 
+    //EFFECTS: creates a button to represent this tool
     @Override
     protected void createButton(JComponent parent) {
         button = new JButton("Erase");
         button = customizeButton(button);
     }
 
+    //EFFECTS: adds and action listener for the button
     @Override
     protected void addListener() {
         button.addActionListener(new DeletePlatformTool.DeletePlatformToolClickHandler());

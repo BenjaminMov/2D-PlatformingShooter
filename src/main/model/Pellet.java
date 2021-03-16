@@ -20,6 +20,7 @@ public class Pellet {
 
     }
 
+    //getters
     public int getPelletX() {
         return pelletX;
     }
@@ -32,6 +33,7 @@ public class Pellet {
         return dx;
     }
 
+    //setters
     public void setPelletX(int pelletX) {
         this.pelletX = pelletX;
     }

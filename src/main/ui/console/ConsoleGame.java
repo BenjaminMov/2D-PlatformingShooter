@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Scanner;
 
+//Class that represents a console based game
 public class ConsoleGame {
 
     private static final String JSON_STORE = "./data/LevelCache.json";
@@ -61,6 +62,7 @@ public class ConsoleGame {
     }
 
 
+    //EFFECTS: Processes menu command
     private void processMenuCommand() {
         System.out.println("E: level editor, L: choose level, Q: quit");
 
@@ -81,6 +83,8 @@ public class ConsoleGame {
         }
     }
 
+    //MODIFIES: levelBank
+    //EFFECTS: displays the possible levels and loads the chosen one
     private void chooseLevel() {
 
         System.out.println("Level Select:");
@@ -93,6 +97,7 @@ public class ConsoleGame {
         loadLevel(command);
     }
 
+    //EFFECTS: gets the names of all levels and prints them
     private void printLevels() {
         List<Level> levels = levelBank.getAllLevels();
 
@@ -101,6 +106,7 @@ public class ConsoleGame {
         }
     }
 
+    //EFFECTS: Starts the level editor
     private void startLevelEditor() {
         System.out.println("enter the name of your new level");
 
@@ -126,6 +132,7 @@ public class ConsoleGame {
         }
     }
 
+    //EFFECTS: processes a command in design menu
     private void processDesignCommand(String name, Level designLevel) throws IOException {
         displayDesignMenu();
 
@@ -149,6 +156,7 @@ public class ConsoleGame {
         }
     }
 
+    //EFFECTS: removes the last added platform
     private void removeLastPlatform(Level designLevel) {
         try {
             designLevel.removeLastPlatform();
@@ -158,6 +166,7 @@ public class ConsoleGame {
         }
     }
 
+    //EFFECTS: takes in a command and makes a new platform accordingly
     private void processNewPlatform(Level level) throws IOException {
         System.out.println("specify x y width as double with spaces in between");
 
@@ -176,6 +185,7 @@ public class ConsoleGame {
         System.out.println("successfully added platform at " + x + ", " + y + ", with width: " + width);
     }
 
+    //EFFECTS: displays design menu
     private void displayDesignMenu() {
         System.out.println("Use the command 'NP' to make a new platform");
         System.out.println("Use the command 'DP' to delete that last platform");
@@ -256,6 +266,7 @@ public class ConsoleGame {
         }
     }
 
+    //EFFECTS: processes a command
     private void processCommand3(String command) {
         switch (command) {
             case "showp":

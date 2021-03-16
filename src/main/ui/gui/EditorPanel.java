@@ -5,9 +5,6 @@ import model.LevelBank;
 import model.Platform;
 import model.World;
 import persistence.JsonWriter;
-import ui.gui.Tools.DeletePlatformTool;
-import ui.gui.Tools.NewPlatformTool;
-import ui.gui.Tools.Tool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +20,6 @@ public class EditorPanel extends JPanel {
     private Level designLevel;
     private List<Tool> tools;
     private Tool activeTool;
-    private JButton saveButton;
-    private JButton quitButton;
 
     private JsonWriter jsonWriter;
 
@@ -39,32 +34,41 @@ public class EditorPanel extends JPanel {
         createTools();
         initializeInteraction();
         makeSaveButton(funGame);
+        makeDeleteButton(funGame);
         makeQuitButton(funGame);
     }
 
-    private void makeQuitButton(FunGame funGame) {
-        quitButton = new JButton("Back To Menu");
-        this.add(quitButton);
+    private void makeDeleteButton(FunGame funGame) {
+        JButton deleteButton = new JButton("Delete this Level");
+        this.add(deleteButton);
 
-        quitButton.addActionListener(new ActionListener() {
+        deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                deleteLevel(designLevel, funGame.getLevelBank());
                 funGame.dispose();
                 new FunGame();
             }
         });
+
+
+    }
+
+    private void makeQuitButton(FunGame funGame) {
+        JButton quitButton = new JButton("Back To Menu");
+        this.add(quitButton);
+
+        quitButton.addActionListener(e -> {
+            funGame.dispose();
+            new FunGame();
+        });
     }
 
     private void makeSaveButton(FunGame funGame) {
-        saveButton = new JButton("SAVE");
+        JButton saveButton = new JButton("SAVE");
         this.add(saveButton);
 
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveLevel(designLevel, funGame.getLevelBank());
-            }
-        });
+        saveButton.addActionListener(e -> saveLevel(designLevel, funGame.getLevelBank()));
     }
 
     @Override
@@ -101,15 +105,6 @@ public class EditorPanel extends JPanel {
     private void handleMouseDragged(MouseEvent e)  {
         if (activeTool != null) {
             activeTool.mouseDraggedInEditingArea(e);
-        }
-        repaint();
-    }
-
-    // EFFECTS: if activeTool != null, then mouseReleasedInDrawingArea is invoked on activeTool, depends on the
-    //          type of the tool which is currently activeTool
-    private void handleMouseReleased(MouseEvent e) {
-        if (activeTool != null) {
-            activeTool.mouseReleasedInEditingArea(e);
         }
         repaint();
     }
@@ -176,6 +171,19 @@ public class EditorPanel extends JPanel {
         }
     }
 
+    //EFFECTS: deletes the level that is currently being edited
+    private void deleteLevel(Level level, LevelBank levelBank) {
+        try {
+            jsonWriter.open();
+            levelBank.getAllLevels().remove(level);
+            jsonWriter.write(levelBank);
+            jsonWriter.close();
+            System.out.println("Deleted " + level.getLevelName() + " from " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setLevelName(String newLvlName) {
         designLevel.setLevelName(newLvlName);
     }
@@ -192,7 +200,6 @@ public class EditorPanel extends JPanel {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            handleMouseReleased(translateEvent(e));
         }
 
         @Override

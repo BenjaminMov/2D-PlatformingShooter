@@ -8,6 +8,7 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
+//A level that holds platforms and has a name
 public class Level implements Writable {
 
     private final List<Platform> allPlatforms;
@@ -18,6 +19,7 @@ public class Level implements Writable {
         this.levelName = levelName;
     }
 
+    //getters
     public String getLevelName() {
         return levelName;
     }
@@ -30,14 +32,19 @@ public class Level implements Writable {
         return allPlatforms;
     }
 
+    //setters
     public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds a platform to the level
     public void addPlatform(Platform platform) {
         allPlatforms.add(platform);
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes the last added platform from this level
     public void removeLastPlatform() throws NoRemainingPlatformException {
         if (allPlatforms.size() == 0) {
             throw new NoRemainingPlatformException();
@@ -46,6 +53,7 @@ public class Level implements Writable {
         }
     }
 
+    //EFFECTS: returns if a given player is on any platforms in the level
     public boolean checkIfOnAnyPlatforms(Player player) {
         boolean onPlatform = false;
         for (Platform p : allPlatforms) {
@@ -57,11 +65,13 @@ public class Level implements Writable {
         return onPlatform;
     }
 
+    //EFFECTS: if player is on a platform, make their y velocity 0
     public void makePlatformsSolid(Player player) {
         boolean myBool = checkIfOnAnyPlatforms(player);
         player.setOnPlatform(myBool);
     }
 
+    //EFFECTS: writes this to Json
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -70,7 +80,7 @@ public class Level implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns platforms in this level as a JSON array
     private JSONArray platformsToJson() {
         JSONArray jsonArray = new JSONArray();
 

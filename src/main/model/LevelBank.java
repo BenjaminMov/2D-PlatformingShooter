@@ -8,6 +8,7 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
+//Class that holds all levels
 public class LevelBank implements Writable {
 
     private final List<Level> allLevels = new ArrayList();
@@ -16,6 +17,7 @@ public class LevelBank implements Writable {
         return allLevels;
     }
 
+    //EFFECTS: writes this levelBank to Json
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -23,7 +25,7 @@ public class LevelBank implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    //EFFECTS: returns levels in this levelBank as a JSON array
     private JSONArray levelToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -33,10 +35,13 @@ public class LevelBank implements Writable {
         return jsonArray;
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds a level to levelBank
     public void addLevel(Level level) {
         allLevels.add(level);
     }
 
+    //EFFECTS: searches through all levels to find a level with a matching name
     public Level findLevel(String levelName) throws NoSuchLevelNameException {
         Level foundLevel = null;
         for (Level level : allLevels) {

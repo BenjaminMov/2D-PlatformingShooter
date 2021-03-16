@@ -1,7 +1,6 @@
 package ui.gui;
 
 import exceptions.NoWinnerException;
-import javafx.scene.Scene;
 import model.Pellet;
 import model.Platform;
 import model.Player;
@@ -9,13 +8,14 @@ import model.World;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.AttributedCharacterIterator;
 
 public class GamePanel extends JPanel {
 
 
     private static final String REPLAY = "Press R to play again";
     private static final String MENU = "Press M to return to menu";
+
+    private static final String EASTER_EGG_KEY = "MrWest";
 
     private static final Integer AMMO_PADDING = 5;
     private static final Integer X_PADDING = 3;
@@ -27,8 +27,14 @@ public class GamePanel extends JPanel {
         this.world = world;
     }
 
+    //EFFECTS: sets background and has an easter Egg
     private void setBackground(Graphics g) {
-        Image img = Toolkit.getDefaultToolkit().getImage("./data/152706522.jpg");
+        Image img;
+        if (world.getLevel().getLevelName().equals(EASTER_EGG_KEY)) {
+            img = Toolkit.getDefaultToolkit().getImage("./data/mrWest.jpg");
+        } else {
+            img = Toolkit.getDefaultToolkit().getImage("./data/152706522.jpg");
+        }
 
         g.drawImage(img, 0,0, World.SCENE_WIDTH,World.SCENE_HEIGHT, null);
     }

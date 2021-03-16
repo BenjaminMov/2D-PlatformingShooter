@@ -1,7 +1,6 @@
-package ui.gui.Tools;
+package ui.gui;
 
 import model.Platform;
-import ui.gui.EditorPanel;
 
 import javax.swing.*;
 import java.awt.*;
