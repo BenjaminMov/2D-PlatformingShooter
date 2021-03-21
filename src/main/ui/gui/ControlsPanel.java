@@ -5,6 +5,7 @@ import model.World;
 import javax.swing.*;
 import java.awt.*;
 
+// A panel to display the controls
 public class ControlsPanel extends JPanel {
 
     private static final int BUTTON_X_PADDING = 10;
@@ -23,6 +24,7 @@ public class ControlsPanel extends JPanel {
         displayP2Controls();
     }
 
+    // EFFECTS: displays the Player 1 controls
     private void displayP1Controls() {
         String text = "PLAYER 1 CONTROLS " + "<br />" + "<br />"
                 + "W : Jump" + "<br />"
@@ -34,6 +36,7 @@ public class ControlsPanel extends JPanel {
         initializeText(text, P1_CONTROLS_PADDING_X, P1_CONTROLS_PADDING_Y);
     }
 
+    // EFFECTS: displays the Player 2 controls
     private void displayP2Controls() {
         String text = "PLAYER 2 CONTROLS " + "<br />" + "<br />"
                 + "Up Arrow : Jump" + "<br />"
@@ -45,6 +48,7 @@ public class ControlsPanel extends JPanel {
         initializeText(text, P2_CONTROLS_PADDING_X, P1_CONTROLS_PADDING_Y);
     }
 
+    // EFFECTS: displays given text with formatting
     private void initializeText(String text, int x, int y) {
         JLabel controls = new JLabel("<html>" + text + "</html>");
         controls.setFont(new Font("Arial", Font.BOLD, 20));
@@ -53,6 +57,7 @@ public class ControlsPanel extends JPanel {
         this.add(controls);
     }
 
+    // EFFECTS: makes a quit button
     private void makeQuitButton(FunGame funGame) {
         JButton quitButton = new JButton("MENU");
         Dimension size = quitButton.getPreferredSize();

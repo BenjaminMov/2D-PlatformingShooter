@@ -39,6 +39,7 @@ public class EditorPanel extends JPanel {
         makeQuitButton(funGame);
     }
 
+    // EFFECTS: makes a delete button
     private void makeDeleteButton(FunGame funGame) {
         JButton deleteButton = new JButton("DELETE LEVEL");
         this.add(deleteButton);
@@ -53,6 +54,7 @@ public class EditorPanel extends JPanel {
         });
     }
 
+    // EFFECTS: makes a quit button
     private void makeQuitButton(FunGame funGame) {
         JButton quitButton = new JButton("MENU");
         this.add(quitButton);
@@ -63,6 +65,7 @@ public class EditorPanel extends JPanel {
         });
     }
 
+    // EFFECTS: makes a save button
     private void makeSaveButton(FunGame funGame) {
         JButton saveButton = new JButton("SAVE");
         this.add(saveButton);
