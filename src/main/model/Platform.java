@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// A platform that can be jumped on by players
 public class Platform implements Writable {
 
     private int platformX;

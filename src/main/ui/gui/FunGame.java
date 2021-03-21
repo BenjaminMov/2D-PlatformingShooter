@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// the Jframe where the application will run
 public class FunGame extends JFrame {
 
     private static final int INTERVAL = 10;
@@ -22,6 +23,7 @@ public class FunGame extends JFrame {
     private LevelBank levelBank;
     private GamePanel gp;
     private EditorPanel ep;
+    private ControlsPanel cp;
     private ArrayList<String> availableLevels;
 
     private JsonReader jsonReader;
@@ -33,7 +35,7 @@ public class FunGame extends JFrame {
         setUndecorated(true);
         initialize();
 
-        String[] options = {"Play", "Level Editor", "Quit"};
+        String[] options = {"Play", "Level Editor", "Controls", "Quit"};
 
         int choice = JOptionPane.showOptionDialog(null, "Fun Game",
                 "Welcome!",
@@ -57,6 +59,12 @@ public class FunGame extends JFrame {
                 break;
             case 1:
                 runLevelEditor();
+                break;
+            case 2:
+                add(cp);
+                pack();
+                centreOnScreen();
+                setVisible(true);
                 break;
             default:
                 this.dispose();
@@ -133,6 +141,7 @@ public class FunGame extends JFrame {
         world = new World();
         gp = new GamePanel(world);
         ep = new EditorPanel(this);
+        cp = new ControlsPanel(this);
         jsonReader = new JsonReader(JSON_STORE);
         availableLevels = new ArrayList<>();
 
@@ -171,9 +180,8 @@ public class FunGame extends JFrame {
         setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
     }
 
-    /*
-     * A key handler to respond to key events
-     */
+
+    // A key handler to respond to key events
     private class KeyHandler extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {

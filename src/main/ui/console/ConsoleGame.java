@@ -287,6 +287,7 @@ public class ConsoleGame {
         }
     }
 
+    // EFFECTS: Prints a corresponding statement to show player whether or not they shot a pellet
     private void printAfterShoot(Player player) {
         if (player.getMagazine() > 0) {
             System.out.println("BANG!");

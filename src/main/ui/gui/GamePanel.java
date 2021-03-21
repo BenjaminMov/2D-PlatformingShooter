@@ -9,6 +9,7 @@ import model.World;
 import javax.swing.*;
 import java.awt.*;
 
+// A panel for playing the game
 public class GamePanel extends JPanel {
 
 

@@ -15,6 +15,7 @@ import java.util.List;
 
 import static ui.gui.FunGame.JSON_STORE;
 
+// A panel for editing levels
 public class EditorPanel extends JPanel {
 
     private Level designLevel;
@@ -39,7 +40,7 @@ public class EditorPanel extends JPanel {
     }
 
     private void makeDeleteButton(FunGame funGame) {
-        JButton deleteButton = new JButton("Delete this Level");
+        JButton deleteButton = new JButton("DELETE LEVEL");
         this.add(deleteButton);
 
         deleteButton.addActionListener(new ActionListener() {
@@ -50,12 +51,10 @@ public class EditorPanel extends JPanel {
                 new FunGame();
             }
         });
-
-
     }
 
     private void makeQuitButton(FunGame funGame) {
-        JButton quitButton = new JButton("Back To Menu");
+        JButton quitButton = new JButton("MENU");
         this.add(quitButton);
 
         quitButton.addActionListener(e -> {
@@ -77,12 +76,14 @@ public class EditorPanel extends JPanel {
         drawPlatforms(g);
     }
 
+    // draws all platforms in the level
     private void drawPlatforms(Graphics g) {
         for (Platform p : designLevel.getPlatforms()) {
             drawPlatform(g, p);
         }
     }
 
+    // EFFECTS: draws a platform for a given platform
     private void drawPlatform(Graphics g, Platform p) {
         Color colourP = g.getColor();
         g.setColor(World.PLATFORM_COLOUR);
@@ -109,10 +110,12 @@ public class EditorPanel extends JPanel {
         repaint();
     }
 
+    // getters
     public Level getDesignLevel() {
         return designLevel;
     }
 
+    //setters
     public void setDesignLevel(Level designLevel) {
         this.designLevel = designLevel;
     }
