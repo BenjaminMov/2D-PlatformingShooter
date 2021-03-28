@@ -6,8 +6,11 @@ import model.Platform;
 import model.Player;
 import model.World;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 // A panel for playing the game
 public class GamePanel extends JPanel {
@@ -26,6 +29,7 @@ public class GamePanel extends JPanel {
     public GamePanel(World world) {
         setPreferredSize(new Dimension(World.SCENE_WIDTH, World.SCENE_HEIGHT));
         this.world = world;
+
     }
 
     //EFFECTS: sets background and has an easter Egg
@@ -94,8 +98,13 @@ public class GamePanel extends JPanel {
         Player p1 = world.getPlayer1();
         Player p2 = world.getPlayer2();
 
-        drawPlayer(g, p1, World.P1_COLOUR);
-        drawPlayer(g, p2, World.P2_COLOUR);
+        if (p1.getAlive()) {
+            drawPlayer(g, p1, World.P1_COLOUR);
+        }
+
+        if (p2.getAlive()) {
+            drawPlayer(g, p2, World.P2_COLOUR);
+        }
 
         drawPlayerPellets(g, p1);
         drawPlayerPellets(g, p2);
@@ -112,7 +121,6 @@ public class GamePanel extends JPanel {
                    Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
         g.setColor(playerColour);
         showAmmo(g, p);
-
     }
 
 

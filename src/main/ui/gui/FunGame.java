@@ -24,6 +24,7 @@ public class FunGame extends JFrame {
     private GamePanel gp;
     private EditorPanel ep;
     private ControlsPanel cp;
+    private BackgroundMusic bm;
     private ArrayList<String> availableLevels;
 
     private JsonReader jsonReader;
@@ -51,11 +52,7 @@ public class FunGame extends JFrame {
             case 0:
                 loadLevel(chooseLevel());
                 add(gp);
-                addKeyListener(new KeyHandler());
-                pack();
-                centreOnScreen();
-                setVisible(true);
-                addTimer();
+                setupGame();
                 break;
             case 1:
                 runLevelEditor();
@@ -70,6 +67,16 @@ public class FunGame extends JFrame {
                 this.dispose();
                 break;
         }
+    }
+
+    private void setupGame() {
+        Thread t = new Thread(bm);
+        t.start();
+        addKeyListener(new KeyHandler());
+        pack();
+        centreOnScreen();
+        setVisible(true);
+        addTimer();
     }
 
     private void runLevelEditor() {
@@ -144,6 +151,8 @@ public class FunGame extends JFrame {
         cp = new ControlsPanel(this);
         jsonReader = new JsonReader(JSON_STORE);
         availableLevels = new ArrayList<>();
+
+        bm = new BackgroundMusic(world);
 
         try {
             levelBank = jsonReader.read();
