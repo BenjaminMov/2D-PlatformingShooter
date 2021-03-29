@@ -5,7 +5,11 @@ import model.Level;
 import model.LevelBank;
 import model.World;
 import persistence.JsonReader;
+import sun.audio.AudioStream;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -26,6 +30,9 @@ public class FunGame extends JFrame {
     private ControlsPanel cp;
     private BackgroundMusic bm;
     private ArrayList<String> availableLevels;
+
+    private Thread thread;
+    private Clip clip;
 
     private JsonReader jsonReader;
 
@@ -70,8 +77,7 @@ public class FunGame extends JFrame {
     }
 
     private void setupGame() {
-        Thread t = new Thread(bm);
-        t.start();
+        thread.start();
         addKeyListener(new KeyHandler());
         pack();
         centreOnScreen();
@@ -153,6 +159,7 @@ public class FunGame extends JFrame {
         availableLevels = new ArrayList<>();
 
         bm = new BackgroundMusic(world);
+        thread = new Thread(bm);
 
         try {
             levelBank = jsonReader.read();
@@ -201,6 +208,7 @@ public class FunGame extends JFrame {
         public void killGameKey(int keyCode) {
             if (keyCode == KeyEvent.VK_M && world.getIfGameOver()) {
                 dispose();
+                bm.getClip().stop();
                 new FunGame();
             }
         }

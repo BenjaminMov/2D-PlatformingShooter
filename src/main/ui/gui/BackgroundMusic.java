@@ -9,6 +9,7 @@ import java.io.IOException;
 public class BackgroundMusic implements Runnable {
 
     private final World world;
+    private Clip clip;
 
     public BackgroundMusic(World world) {
         this.world = world;
@@ -17,14 +18,17 @@ public class BackgroundMusic implements Runnable {
     @Override
     public void run() {
         try {
-            final Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             final AudioInputStream inputStream = AudioSystem.getAudioInputStream(
                     new File("./data/RoyaltyFreeBattle.wav"));
             clip.open(inputStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-            Thread.sleep(10000);
-        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException | InterruptedException e) {
+            clip.start();
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
+    }
+
+    public Clip getClip() {
+        return clip;
     }
 }
