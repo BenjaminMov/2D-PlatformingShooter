@@ -30,3 +30,12 @@ Because of my passion and liking of such games, I feel it is a good challenge an
 - As a user, I want to be able to interact with the level chosen
 - As a user, I want to be able to create a level
 - As a user, I want to be able to save levels that I have made
+
+## Phase 4: Task 2
+Rigid Exception catching for NoSuchLevelNameException thrown in LevelBank Class in the 'findLevel' method.
+
+## Phase 4: Task 3
+- Change the 'Pellets' class to be of type iterable rather than holding a list of Pellets
+- Delete the 'LevelBank' class and save each level as an individual file, this would mean changing detecting how levels are found but would allow for the deletion of an entire class
+- Change the location of keyEvent data to one centralized class to increase cohesion
+- Refactor Editor panel controls and tools to only include necesarry mouse events and action (originally left in for potential addition of actions)
