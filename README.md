@@ -30,3 +30,6 @@ Because of my passion and liking of such games, I feel it is a good challenge an
 - As a user, I want to be able to interact with the level chosen
 - As a user, I want to be able to create a level
 - As a user, I want to be able to save levels that I have made
+
+## Phase 4
+Rigid Exception catching for NoSuchLevelNameException thrown in LevelBank Class in the 'findLevel' method.
