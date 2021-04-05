@@ -194,6 +194,7 @@ public class EditorPanel extends JPanel {
         designLevel.setLevelName(newLvlName);
     }
 
+    //Class to represent a MouseListener in the Editor Panel
     private class EditorMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
