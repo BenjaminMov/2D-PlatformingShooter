@@ -111,6 +111,7 @@ public class FunGame extends JFrame {
         }
     }
 
+    // Effects: Editing Old Levels
     private void runEditingOldLevel() {
         try {
             Level editingLevel = levelBank.findLevel(chooseLevel());
